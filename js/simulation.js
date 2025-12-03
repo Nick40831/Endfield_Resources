@@ -43,7 +43,9 @@ function runSimulation() {
     let arsenalTotals = [];
     let pullTotals = [];
 
-    let pullQuantity, potQuantity, arsenalQuantity = null;
+    let pullQuantity = null; 
+    let potQuantity = null;
+    let arsenalQuantity = null;
 
     let quantity = document.getElementById('quantityInput').value;
     let sampleSize = document.getElementById('iterationInput').value;
@@ -97,7 +99,7 @@ function runSimulation() {
             throw new Error("At least one of pullQuantity, potQuantity, or arsenalQuantity must be provided.");
         }
 
-        while (!loopExitCondition()) {
+        while (!loopExitCondition() && pulls < 2000) {
             pulls++;
             pityCounter++;
 
@@ -105,7 +107,7 @@ function runSimulation() {
             if (pulls % DUPLICATE_PITY_INTERVAL === 0) {
                 limited6StarCount++;
                 total6StarCount++;
-                arsenalCounter += 2000;
+                arsenalCounter += SIX_STAR_ARSENAL;
                 pityRate = SOFT_PITY_BASE_RATE;
             }
 
@@ -113,7 +115,7 @@ function runSimulation() {
             if (!gotLimited && pulls === LIMITED_PITY_INTERVAL) {
                 limited6StarCount++;
                 total6StarCount++;
-                arsenalCounter += 2000;
+                arsenalCounter += SIX_STAR_ARSENAL;
                 pityRate = SOFT_PITY_BASE_RATE;
                 pityCounter = 0;
                 guaranteed5StarCounter = 0;
@@ -127,7 +129,7 @@ function runSimulation() {
                     gotLimited = true;
                 }
                 total6StarCount++;
-                arsenalCounter += 2000;
+                arsenalCounter += SIX_STAR_ARSENAL;
                 pityRate = SOFT_PITY_BASE_RATE;
                 guaranteed5StarCounter = 0;
             }
@@ -142,7 +144,7 @@ function runSimulation() {
                         gotLimited = true;
                     }
                     total6StarCount++;
-                    arsenalCounter += 2000;
+                    arsenalCounter += SIX_STAR_ARSENAL;
                     pityRate = SOFT_PITY_BASE_RATE;
                     guaranteed5StarCounter = 0;
                 }
@@ -157,18 +159,18 @@ function runSimulation() {
                     if (guaranteed5StarCounter === GUARANTEED_5_STAR_INTERVAL - 1) {
                         total5StarCount++;
                         guaranteed5StarCounter = 0;
-                        arsenalCounter += 200;
+                        arsenalCounter += FIVE_STAR_ARSENAL;
                     }
 
                     // Else, try and pull 5*, if failed, pull 4*
                     else if (Math.random() < FIVE_STAR_RATE) {
                         total5StarCount++;
                         guaranteed5StarCounter = 0;
-                        arsenalCounter += 200;
+                        arsenalCounter += FIVE_STAR_ARSENAL;
                     } else {
                         total4StarCount++;
                         guaranteed5StarCounter++;
-                        arsenalCounter += 20;
+                        arsenalCounter += FOUR_STAR_ARSENAL;
                     }
                 }
             }
@@ -208,12 +210,12 @@ function runSimulation() {
         <p>---------------------------------------------</p>
         ${pullQuantity === null ? `<p><strong>Mean number of pulls performed:</strong> ${meanPulls.toFixed(2)}</p>` : ''}
         <ul>
-            <li><strong>Mean rate-up 6* pulls:</strong> ${meanLimited6.toFixed(2)}</li>
-            <li><strong>Mean number of 6* (Including limited 6*):</strong> ${mean6.toFixed(2)}</li>
-            <li><strong>Mean number of 5*:</strong> ${mean5.toFixed(2)}</li>
-            <li><strong>Mean number of 4*:</strong> ${mean4.toFixed(2)}</li>
-            <li><strong>Mean arsenal tokens:</strong> ${meanArsenal.toFixed(2)} (or ${meanArsenalPulls.toFixed(2)} 10x Arsenal Pulls)</li>
-            <li><strong>Mean arsenal pull count:</strong> ${meanPulls.toFixed(2)}</li>
+            <li><strong>Mean rate-up 6* pulls:</strong> ${meanLimited6.toFixed(2)} rate-up operators</li>
+            <li><strong>Mean number of 6* (Including rate-up 6*):</strong> ${mean6.toFixed(2)} operators</li>
+            <li><strong>Mean number of 5*:</strong> ${mean5.toFixed(2)} operators</li>
+            <li><strong>Mean number of 4*:</strong> ${mean4.toFixed(2)} operators</li>
+            <li><strong>Mean arsenal tokens:</strong> ${meanArsenal.toFixed(2)} tokens</li>
+            <li><strong>Mean arsenal pull count:</strong> ${meanArsenalPulls.toFixed(2)} 10x Arsenal Pulls</li>
         </ul>
     `;
 
