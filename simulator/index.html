@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Endfield Resources</title>
+		<link rel="stylesheet" href="../css/simulator.css">
+		<script src="../js/simulation.js" defer></script>
+    </head>
+    <body>
+        <div class="header">
+            <a href="../index.html">Endfield Resources</a>
+        </div>
+        
+        <div class="toolbar">
+            <div class="header">
+                <p>Simulation</p>
+            </div>
+            <div class="inputBody">
+                <p class="inputText">Please select simulation type:</p>
+                <div class="buttonlist">
+                    <button id="pullbutton" class="modeButton activeButton">
+                        # of Pulls
+                    </button>
+                    <button id="rateupbutton" class="modeButton">
+                        # of Rate-Up Pots
+                    </button>
+                    <button id="arsenalbutton" class="modeButton">
+                        # of 10x Arsenal Pulls
+                    </button>
+                </div>
+                <div class="inputdiv">
+                    <div>
+                        <input id="iterationInput" value="1000" type="number" min="1"> 
+                        <p>Iterations</p>
+                    </div>
+                    <div>
+                        <input id="quantityInput" value="1" type="number" min="1">    
+                        <p id="inputtext">Pulls</p> 
+                    </div>
+                    <button onclick="runSimulation()">Simulate</button>
+                </div>
+            </div>
+            <div class="header2">
+                <p>Results</p>
+            </div>
+            <div id="results">
+                <div id="resultContent">
+                    <p id="resultText">Please Run a Simulation</p>
+                    <div id="resultStats">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
