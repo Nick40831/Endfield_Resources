@@ -8,6 +8,42 @@ function updateMode(mode, activeButton) {
     buttons.forEach(button => button.classList.remove('activeButton'));
 
     activeButton.classList.add('activeButton');
+    updateLimits(mode);
+}
+
+function updateLimits(mode) {
+    let input = document.getElementById("quantityInput");
+    let range = document.getElementById("quantitySubtext")
+        
+    input.onkeyup = function() {
+        let value = parseInt(this.value, 10);
+
+        if ((mode === "Pulls" && value > 1000) ||
+            (mode === "Rate-Up Pots" && value > 6) ||
+            (mode === "10x Arsenal Pulls" && value > 50)) {
+            this.value = Math.floor(this.value / 10);  
+        }
+
+        if (value < -1) {
+            this.value *= -1;  
+        }
+    };
+     
+    if (mode === "Pulls") {
+        input.setAttribute("min", 1);
+        input.setAttribute("max", 1000);
+        range.textContent = "Range: 1 - 1000";
+    }
+    else if (mode === "Rate-Up Pots") {
+        input.setAttribute("min", 1);
+        input.setAttribute("max", 6);
+        range.textContent = "Range: 1 - 6";
+    }
+    else if (mode === "10x Arsenal Pulls") {
+        input.setAttribute("min", 1);
+        input.setAttribute("max", 50);
+        range.textContent = "Range: 1 - 50";
+    }
 }
 
 document.getElementById('pullbutton').addEventListener('click', function(event) {
@@ -23,6 +59,17 @@ document.getElementById('arsenalbutton').addEventListener('click', function(even
 });
 
 function runSimulation() {
+    document.getElementById('resultStats').hidden = true;
+    document.getElementById('resultText').hidden = false;
+    document.getElementById('resultText').textContent = "Running Simulation\r\nPlease Wait";
+
+    // Allow the UI to update before heavy work
+    setTimeout(() => {
+        simulation();
+    }, 0);
+}
+
+function simulation() {
     // Constants
     const SOFT_PITY_BASE_RATE = 0.008;
     const SOFT_PITY_INCREMENT = 0.05;
@@ -202,7 +249,7 @@ function runSimulation() {
     } else if (potQuantity !== null) {
         simulationDescription = `${sampleSize} Simulated Runs of Pulling ${potQuantity} Rate-Up Pots`;
     } else if (arsenalQuantity !== null) {
-        simulationDescription = `${sampleSize} Simulated Runs of Pulling ${arsenalQuantity} Arsenal Pulls`;
+        simulationDescription = `${sampleSize} Simulated Runs of Pulling ${Math.floor(arsenalQuantity/1980)} 10x Arsenal Pulls`;
     }
 
     const resultHTML = `
@@ -220,6 +267,7 @@ function runSimulation() {
     `;
 
     document.getElementById('resultStats').innerHTML = resultHTML;
+    document.getElementById('resultStats').hidden = false;
     document.getElementById('resultText').hidden = true;
 }
 

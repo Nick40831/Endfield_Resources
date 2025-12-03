@@ -31,12 +31,14 @@
                 </div>
                 <div class="inputdiv">
                     <div>
-                        <input id="iterationInput" value="1000" type="number" min="1"> 
                         <p>Iterations</p>
+                        <input id="iterationInput" value="10000" type="number" min="1"> 
+                        <p class="inputSubtext">Recommended: ~10000</p>
                     </div>
                     <div>
-                        <input id="quantityInput" value="1" type="number" min="1">    
                         <p id="inputtext">Pulls</p> 
+                        <input id="quantityInput" value="1" type="number" min="1"> 
+                        <p id="quantitySubtext" class="inputSubtext">Range: 1 - 1000</p>   
                     </div>
                     <button onclick="runSimulation()">Simulate</button>
                 </div>
