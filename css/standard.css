@@ -70,7 +70,6 @@ a {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 0 2rem;
 }
 
 .carousel-arrow {
@@ -82,6 +81,8 @@ a {
   height: 3rem;
   border-radius: 50%;
   cursor: pointer;
+  z-index: 99;
+  margin: 0 2rem;
 }
 
 .carousel-arrow:hover {
@@ -93,7 +94,8 @@ a {
   flex: 1;
   display: flex;
   flex-direction: row;
-  padding: 0 2rem;
+  transition: transform 0.3s ease; 
+  padding: 0 6rem;
   overflow-x: scroll;
   white-space: nowrap;
   gap: 1rem;
@@ -109,6 +111,7 @@ a {
   cursor: pointer;
   gap: 10px;
   align-items: center;
+  scroll-snap-align: center;
 }
 
 .carousel-button img {
@@ -126,3 +129,51 @@ a {
   align-content: center;
   justify-content: center;
 }
+
+.carousel-wrapper::before,
+.carousel-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 125px; 
+    z-index: 20;
+}
+
+.carousel-wrapper::before {
+  background: linear-gradient(to left, #A0AAA900, #a0aaa9);
+}
+
+.carousel-wrapper::after {
+  background: linear-gradient(to right, #A0AAA900, #a0aaa9);
+}
+
+.carousel-wrapper::before {
+    left: 0;
+}
+
+.carousel-wrapper::after {
+    right: 0;
+}
+
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 99;
+}
+
+#carousel-left {
+    left: 0;
+}
+
+#carousel-right {
+    right: 0;
+}
+
