@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="./css/standard.css">
 		<link rel="stylesheet" href="./css/index.css">
 		<script src="./js/index.js" defer></script>
+		<script src="./js/landmine.js" defer></script>	
 	</head>
 
 	<body>
@@ -19,67 +20,76 @@
 				<h2>Tools</h2>
 			</div>
 			<div class="carousel-wrapper">
-				<button class="carousel-arrow" id="carousel-left">◀</button>
+				<button class="carousel-arrow" id="carousel-left" hidden="true">◀</button>
 				<div class="carousel" id="tools-carousel">
 					<button class="carousel-button" id="simulator-button">
 						<img src="./images/HH-10x_Permit.png">
 						<p>Pull Simulation</p>
 					</button>
-					<button class="carousel-button" id="income-button">
+					<button class="carousel-button out-of-order" id="income-button">
 						<img src="./images/Origeometry.png">
 						<p>Income Calculator</p>
 					</button>
-					<button class="carousel-button">
-						<img>
-						<p>Placeholder</p>
+					<button class="carousel-button planned" id="income-button">
+						<img src="./images/Basic_AIC_Index.png">
+						<p>Factory Tool</p>
 					</button>
-					<button class="carousel-button">
-						<img>
-						<p>Placeholder</p>
+					<button class="carousel-button planned" id="income-button">
+						<img src="./images/TP_Point.png">
+						<p>Interactive Map</p>
 					</button>
-					<button class="carousel-button">
-						<img>
-						<p>Placeholder</p>
+					<button class="carousel-button planned" id="income-button">
+						<img src="./images/Protohedron.png">
+						<p>Operator Level Calculator</p>
 					</button>
-					<button class="carousel-button">
-						<img>
-						<p>Placeholder</p>
+					<button class="carousel-button planned" id="income-button">
+						<img src="./images/Arms_INSP_Set.png">
+						<p>Weapon Level Calculator</p>
 					</button>
-					<button class="carousel-button">
-						<img>
-						<p>Placeholder</p>
-					</button>
-					<button class="carousel-button">
-						<img>
-						<p>Placeholder</p>
-					</button>
-					<button class="carousel-button">
-						<img>
-						<p>Placeholder</p>
-					</button>
-					<button class="carousel-button">
-						<img>
-						<p>Placeholder</p>
-					</button>
-					<button class="carousel-button">
-						<img>
-						<p>Placeholder</p>
-					</button>
-					<button class="carousel-button">
-						<img>
-						<p>Placeholder</p>
-					</button>
-					<button class="carousel-button">
-						<img>
-						<p>Placeholder</p>
-					</button>
-					<button class="carousel-button">
-						<img>
-						<p>Placeholder</p>
+					<button class="carousel-button planned" id="income-button">
+						<img src="./images/Tales_of_the_Bizarre_Wild.png">
+						<p>Extra Resources</p>
 					</button>
 				</div>
-				<button class="carousel-arrow" id="carousel-right">▶</button>
+				<button class="carousel-arrow" id="carousel-right" hidden="true">▶</button>
 			</div>
+			<div class="header1">
+				<h2>Games</h2>
+			</div>
+			<div class="carousel-wrapper">
+				<button class="carousel-arrow" id="carousel-left" hidden="true">◀</button>
+				<div class="carousel" id="tools-carousel">
+					<button class="carousel-button planned" id="income-button">
+						<img src="./images/Landmine.png" style="object-fit:contain; width:5rem">
+						<p>Landmine Stats</p>
+					</button>
+					<button class="carousel-button planned" id="income-button">
+						<img src="./images/HH_Permit.png">
+						<p>Operator Gacha</p>
+					</button>
+					<button class="carousel-button planned" id="income-button">
+						<img src="./images/Targeted_Weapon_Supply.png">
+						<p>Weapon Gacha</p>
+					</button>
+				</div>
+				<button class="carousel-arrow" id="carousel-right" hidden="true">▶</button>
+			</div>
+
+			<div class="header2">
+				<h2>Blog</h2>
+			</div>
+			<div id="blog">
+				<!-- <h3>Initial Release - December 2025</h3>
+				<p>
+					aslkdfjalks;djfk;lasdfas
+				</p> -->
+			</div>
+		</div>
+
+		<div id="footer">
+			<a href="https://github.com/Nick40831/Endfield_Resources" target="_blank" rel="noopener noreferrer">GitHub</a>
+			<p>Thank you for visiting! The factory must grow!</p>
+			<a href="https://github.com/Nick40831" target="_blank" rel="noopener noreferrer"><img src="images/Creator_Mark.png"></a>
 		</div>
 	</body>
 </html>
