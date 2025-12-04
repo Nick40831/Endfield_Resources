@@ -1,9 +1,9 @@
 :root {
     --primary-accent: #f8f546;
     --secondary-accent: #d8ee83;
-    --background-color-1: #A0AAA9;
-    --background-color-2: #7e807c;
-    --background-color-3: #313739;
+    --base-color-1: #A0AAA9;
+    --base-color-2: #7e807c;
+    --base-color-3: #313739;
     --text-color-1: #000000;
     --text-color-2: #d0d4d3;
 
@@ -13,7 +13,7 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    background-color: var(--background-color-1);
+    background-color: var(--base-color-1);
 }
 
 p {
@@ -22,7 +22,7 @@ p {
 }
 
 .header {
-    background-color: var(--background-color-3);
+    background-color: var(--base-color-3);
     height: 8vh;
     align-content: center;
 }
@@ -43,7 +43,7 @@ p {
     min-width: 250px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
-    background-color: var(--background-color-3);
+    background-color: var(--base-color-3);
     height: auto;              
 }
 
@@ -62,7 +62,7 @@ p {
     min-width: 200px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
-    background-color: var(--background-color-3);
+    background-color: var(--base-color-3);
     height: auto;              
 }
 
@@ -97,7 +97,7 @@ p {
     font-size: 100%;
     padding: 0 1vw;
     border-radius: 8px;
-    background-color: var(--background-color-2);
+    background-color: var(--base-color-2);
 }
 
 .activeButton {
@@ -138,7 +138,7 @@ p {
     width: 10vw;
     height: 4vh;
     text-align: center;
-    background-color: var(--background-color-1);
+    background-color: var(--base-color-1);
     font-size: 3vh;
     margin: 1vh 0;
 }
@@ -155,7 +155,7 @@ p {
     font-weight: bold;
     padding: 0 1vw;
     border-radius: 8px;
-    background-color: var(--background-color-2);    
+    background-color: var(--base-color-2);    
 }
 
 #resultContent {

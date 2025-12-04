@@ -1,101 +1,136 @@
-:root {
-    --primary-accent: #f8f546;
-    --secondary-accent: #d8ee83;
-    --background-color-1: #A0AAA9;
-    --background-color-2: #7e807c;
-    --background-color-3: #313739;
-    --text-color-1: #000000;
-    --text-color-2: #d0d4d3;
+/*
+Move into standard css file later
+*/
 
-    scroll-behavior: smooth;
+:root {
+  --primary-accent: #f8f546;
+  --secondary-accent: #d8ee83;
+  --base-color-1: #A0AAA9;
+  --base-color-2: #7e807c;
+  --base-color-3: #313739;
+  --text-color-1: #000000;
+  --text-color-2: #d0d4d3;
+
+  scroll-behavior: smooth;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background-color: var(--background-color-1);
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--base-color-1);
 }
 
-p {
-    margin: 0;
-    padding: 0;
+p, div, a, h1, h2, h3, h4, h5 {
+  margin: 0;
+  padding: 0;
 }
 
-.header {
-    background-color: var(--background-color-3);
-    height: 8vh;
-    align-content: center;
+a {
+  text-decoration: none;
 }
 
-.header a {
-    font-size: 4vh;
-    font-weight: bold;
-    color: var(--text-color-2);
-    padding-left: 2vw;
+#title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--base-color-3);
+  height: 4rem;
+  width: 100%;
+  margin-bottom: 3rem;
 }
 
-.toolbar .header {
-    display: inline-flex;        
-    align-items: center;      
-    margin: 2.5vw 0 0 0;
-    padding: 1vh 0;          
-    min-width: 250px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    background-color: var(--background-color-3);
-    height: auto;              
+#title a {
+  color: var(--primary-accent);
+  padding-left: 1rem;
 }
 
-.toolbar .header p {
-    font-size: 3.5vh;
-    font-weight: normal;
-    padding-left: 1vw;
-    color: var(--text-color-2);
+.header1 {
+  color: var(--secondary-accent);
+  background-color: var(--base-color-3);
+  height: 3rem;
+  width: 10rem;
+  margin: 3rem 0 2rem 0;
+  padding-left: 1rem;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  align-content: center;
 }
 
-.toolbar .carousel {
-    padding: 2vw 3vw;
-    overflow-x: scroll;
-    white-space: nowrap;
+.carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 2rem;
 }
 
-.toolbar button {
-    display: flex;
-    flex: auto;
-    flex-direction: column;
-    background-color: transparent;
-    border: none;
-    display: inline;
-    margin: 0 0.5vw;
-    cursor: pointer;
+.carousel-arrow {
+  background-color: var(--base-color-3);
+  color: var(--primary-accent);
+  border: none;
+  font-size: 1.5rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
-.toolbar button img {
-    height: 10vw;
-    aspect-ratio: 1;
-    border: 5px white solid;
-    border-radius: 10px;
-    background-color: var(--background-color-2);
+.carousel-arrow:hover {
+  background-color: var(--secondary-accent);
+  color: black;
 }
 
-.toolbar button p {
-    margin-top: 1vh;
-    font-size: 2.5vh;
+.carousel {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  padding: 0 2rem;
+  overflow-x: scroll;
+  white-space: nowrap;
+  gap: 1rem;
+  scroll-behavior: smooth;
 }
 
-::-webkit-scrollbar {  
-    height: 1vh;
+.carousel-button {
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  border: none;
+  margin: 0 10px;
+  cursor: pointer;
+  gap: 10px;
+  align-items: center;
+}
+
+.carousel-button img {
+  height: 7rem;
+  aspect-ratio: 1;
+  border: 5px var(--primary-accent) solid;
+  border-radius: 10px;
+  background-color: var(--base-color-2);
+}
+
+.carousel-button p {
+  font-size: 1.5rem;
+  white-space: normal;
+  width: 100%;
+  align-content: center;
+  justify-content: center;
+}
+
+/*
+Page specific
+*/
+
+::-webkit-scrollbar { 
+  height: 0;
 }
 
 ::-webkit-scrollbar-track {
-    background-color: transparent;  
+  background-color: transparent;  
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #888;  
-    border-radius: 4px;  
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background-color: #555;  
+  background-color: transparent;   
 }
