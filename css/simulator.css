@@ -1,78 +1,3 @@
-:root {
-    --primary-accent: #f8f546;
-    --secondary-accent: #d8ee83;
-    --background-color-1: #A0AAA9;
-    --background-color-2: #7e807c;
-    --background-color-3: #313739;
-    --text-color-1: #000000;
-    --text-color-2: #d0d4d3;
-
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background-color: var(--background-color-1);
-}
-
-p {
-    margin: 0;
-    padding: 0;
-}
-
-.header {
-    background-color: var(--background-color-3);
-    height: 8vh;
-    align-content: center;
-}
-
-.header a {
-    font-size: 4vh;
-    font-weight: bold;
-    color: var(--text-color-2);
-    padding-left: 2vw;
-    text-decoration: none;
-}
-
-.toolbar .header {
-    display: inline-flex;        
-    align-items: center;      
-    margin: 2.5vw 0 0 0;
-    padding: 1vh 0;          
-    min-width: 250px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    background-color: var(--background-color-3);
-    height: auto;              
-}
-
-.toolbar .header p {
-    font-size: 3.5vh;
-    font-weight: normal;
-    padding-left: 1vw;
-    color: var(--text-color-2);
-}
-
-.toolbar .header2 {
-    display: inline-flex;        
-    align-items: center;      
-    margin: 2.5vw 0 0 0;
-    padding: 1vh 0;          
-    min-width: 200px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    background-color: var(--background-color-3);
-    height: auto;              
-}
-
-.toolbar .header2 p {
-    font-size: 3vh;
-    font-weight: normal;
-    padding-left: 1vw;
-    color: var(--text-color-2);
-}
-
 .inputBody {
     display: flex;
     flex-direction: column;
@@ -97,7 +22,7 @@ p {
     font-size: 100%;
     padding: 0 1vw;
     border-radius: 8px;
-    background-color: var(--background-color-2);
+    background-color: var(--base-color-2);
 }
 
 .activeButton {
@@ -138,7 +63,7 @@ p {
     width: 10vw;
     height: 4vh;
     text-align: center;
-    background-color: var(--background-color-1);
+    background-color: var(--base-color-1);
     font-size: 3vh;
     margin: 1vh 0;
 }
@@ -155,7 +80,7 @@ p {
     font-weight: bold;
     padding: 0 1vw;
     border-radius: 8px;
-    background-color: var(--background-color-2);    
+    background-color: var(--base-color-2);    
 }
 
 #resultContent {
