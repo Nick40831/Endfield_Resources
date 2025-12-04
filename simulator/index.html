@@ -1,59 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Endfield Resources</title>
-		<link rel="stylesheet" href="../css/simulator.css">
-		<script src="../js/simulation.js" defer></script>
-    </head>
-    <body>
-        <div class="header">
-            <a href="../index.html">Endfield Resources</a>
-        </div>
-        
-        <div class="toolbar">
-            <div class="header">
-                <p>Simulation</p>
-            </div>
-            <div class="inputBody">
-                <p class="inputText">Please select simulation type:</p>
-                <div class="buttonlist">
-                    <button id="pullbutton" class="modeButton activeButton">
-                        # of Pulls
-                    </button>
-                    <button id="rateupbutton" class="modeButton">
-                        # of Rate-Up Pots
-                    </button>
-                    <button id="arsenalbutton" class="modeButton">
-                        # of 10x Arsenal Pulls
-                    </button>
-                </div>
-                <div class="inputdiv">
-                    <div>
-                        <p>Iterations</p>
-                        <input id="iterationInput" value="10000" type="number" min="1"> 
-                        <p class="inputSubtext">Recommended: ~10000</p>
-                    </div>
-                    <div>
-                        <p id="inputtext">Pulls</p> 
-                        <input id="quantityInput" value="1" type="number" min="1"> 
-                        <p id="quantitySubtext" class="inputSubtext">Range: 1 - 1000</p>   
-                    </div>
-                    <button onclick="runSimulation()">Simulate</button>
-                </div>
-            </div>
-            <div class="header2">
-                <p>Results</p>
-            </div>
-            <div id="results">
-                <div id="resultContent">
-                    <p id="resultText">Please Run a Simulation</p>
-                    <div id="resultStats">
+	<head>
+		<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Endfield Resources</title>
+	<link rel="stylesheet" href="../css/standard.css">
+	<link rel="stylesheet" href="../css/simulator.css">
+	<script src="../js/simulation.js" defer></script>
+	</head>
 
-                    </div>
-                </div>
-            </div>
-        </div>
-    </body>
+	<body>
+		<div id="title">
+			<a href="../index.html"><h1>Endfield Resources</h1></a>
+		</div>
+		
+		<div class="content">
+			<div class="header1">
+				<h2>Pull Simulation</h2>
+			</div>
+			<div class="inputBody">
+				<p class="inputText">Please select simulation type:</p>
+				<div class="buttonlist">
+					<button id="pullbutton" class="modeButton activeButton">
+						# of Pulls
+					</button>
+					<button id="rateupbutton" class="modeButton">
+						# of Rate-Up Pots
+					</button>
+					<button id="arsenalbutton" class="modeButton">
+						# of 10x Arsenal Pulls
+					</button>
+				</div>
+				<div class="inputdiv">
+					<div>
+						<p>Iterations</p>
+						<input id="iterationInput" value="10000" type="number" min="1"> 
+						<p class="inputSubtext">Recommended: ~10000</p>
+					</div>
+					<div>
+						<p id="inputtext">Pulls</p> 
+						<input id="quantityInput" value="1" type="number" min="1"> 
+						<p id="quantitySubtext" class="inputSubtext">Range: 1 - 1000</p>   
+					</div>
+					<button onclick="runSimulation()">Simulate</button>
+				</div>
+			</div>
+			<div class="header2">
+				<h3>Results</h3>
+			</div>
+			<div id="results">
+				<div id="resultContent">
+					<p id="resultText">Please Run a Simulation</p>
+					<div id="resultStats">
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>
