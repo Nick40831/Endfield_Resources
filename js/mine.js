@@ -20,7 +20,7 @@ function loadMine() {
 
 	button.setAttribute('style', 'cursor: pointer;')
 	button.onclick = explodeMine;
-	button.setAttribute('style', 'position: absolute; right: 30px; bottom: 55px; width: auto; height: auto; transform: rotate(-15deg); background-color: transparent; border: none; cursor: pointer;');
+	button.setAttribute('style', 'position: fixed; right: 30px; bottom: 55px; width: auto; height: auto; transform: rotate(-15deg); background-color: transparent; border: none; cursor: pointer; padding: 0; margin: 0; z-index: 99;');
 
 	mine.id = "landmine"
 	mine.src = "../images/Landmine.png"
@@ -28,7 +28,7 @@ function loadMine() {
 
 	minetext.id = "mine-text"
 
-	minetext.setAttribute('style', 'position: absolute; right: 100px; bottom: 55px; width: auto; height: auto; text-align: right; text-anchor: right;');
+	minetext.setAttribute('style', 'position: fixed; right: 100px; bottom: 55px; width: auto; height: auto; text-align: right; text-anchor: right;');
 
 	button.appendChild(mine);
 	document.body.appendChild(button);
