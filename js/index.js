@@ -21,3 +21,7 @@ document.getElementById('simulator-button').addEventListener('click', function()
 document.getElementById('income-button').addEventListener('click', function() {
 	window.location.href = './income';  
 });
+
+document.getElementById('landmine-button').addEventListener('click', function() {
+	window.location.href = './landmine';  
+});
