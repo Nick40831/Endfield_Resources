@@ -23,7 +23,7 @@ function loadMine() {
 	button.setAttribute('style', 'display: flex; position: fixed; right: 30px; bottom: 55px; width: 4rem; height: auto; justify-content: center; transform: rotate(-15deg); background-color: transparent; cursor: pointer; border: none; padding: 0; margin: 0; z-index: 99;');
 
 	mine.id = "landmine"
-	mine.src = "./images/Landmine.png"
+	mine.src = "../images/Landmine.png"
 	mine.setAttribute('style', 'width: 3rem; height: auto; position: absolute; bottom:0');
 
 	minetext.id = "mine-text"
@@ -48,9 +48,9 @@ function explodeMine(event) {
 		minetext.textContent = EXPLOSION_MSGS[Math.floor(Math.random() * EXPLOSION_MSGS.length)];
 		minetext.hidden = false;
 
-		mine.src = "./images/Landmine_Exploded.png"; 
+		mine.src = "../images/Landmine_Exploded.png"; 
 		setTimeout(() => {
-			mine.src = "./images/Landmine.png";
+			mine.src = "../images/Landmine.png";
 		}, 500); 
 		setTimeout(() => {
 			minetext.hidden = true;
