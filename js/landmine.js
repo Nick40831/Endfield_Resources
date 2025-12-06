@@ -7,4 +7,4 @@ function getMineStats() {
   text.textContent = "You have stepped on " + count + " landmines!"
 }
 
-getMineStats();
+getMineStats(); 

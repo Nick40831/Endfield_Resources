@@ -171,12 +171,12 @@ a {
 
 .carousel-wrapper::before,
 .carousel-wrapper::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 125px; 
-    z-index: 20;
+	content: '';
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 125px; 
+	z-index: 20;
 }
 
 .carousel-wrapper::before {
@@ -188,70 +188,74 @@ a {
 }
 
 .carousel-wrapper::before {
-    left: 0;
+	left: 0;
 }
 
 .carousel-wrapper::after {
-    right: 0;
+	right: 0;
 }
 
 .carousel-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    font-size: 24px;
-    padding: 10px;
-    cursor: pointer;
-    z-index: 99;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	background: rgba(0, 0, 0, 0.5);
+	color: white;
+	border: none;
+	font-size: 24px;
+	padding: 10px;
+	cursor: pointer;
+	z-index: 99;
 }
 
 #carousel-left {
-    left: 0;
+	left: 0;
 }
 
 #carousel-right {
-    right: 0;
+	right: 0;
+}
+
+.carousel-button.out-of-order::after,
+.carousel-button.planned::after,
+.carousel-button.soon::after {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) rotate(-35deg);
+	color: white;
+	font-weight: bold;
+	padding: 6px 20px;
+	font-size: 1rem;
+	pointer-events: none;
+	text-transform: uppercase;
+	border-radius: 5px;
+	z-index: 10;
 }
 
 .carousel-button.out-of-order::after {
-    content: "OUT OF ORDER";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-35deg);
-    background: rgba(200, 0, 0, 0.8);
-    color: white;
-    font-weight: bold;
-    padding: 6px 20px;
-    font-size: 1rem;
-    pointer-events: none;
-    text-transform: uppercase;
-    border-radius: 5px;
-    z-index: 10;
+	content: "OUT OF ORDER";
+	background: rgba(200, 0, 0, 0.8);
 }
 
 .carousel-button.planned::after {
-    content: "PLANNED";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-35deg);
-    background: rgba(200, 0, 0, 0.8);
-    color: white;
-    font-weight: bold;
-    padding: 6px 20px;
-    font-size: 1rem;
-    pointer-events: none;
-    text-transform: uppercase;
-    border-radius: 5px;
-    z-index: 10;
+	content: "PLANNED";
+	background: rgba(0, 94, 255, 0.8);
+}
+
+.carousel-button.soon::after {
+	content: "COMING SOON";
+	background: rgba(37, 200, 0, 0.8);
 }
 
 .carousel-button.out-of-order,
-.carousel-button.planned {
-    opacity: 0.4;        
-    pointer-events: none; 
+.carousel-button.planned,
+.carousel-button.soon {
+	opacity: 0.4;        
+	pointer-events: none; 
+}
+
+::-webkit-scrollbar { 
+	height: 0;	
+  width: 0;
 }
