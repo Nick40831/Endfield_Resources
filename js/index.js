@@ -15,13 +15,13 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.getElementById('simulator-button').addEventListener('click', function() {
-	window.location.href = './simulator';  
+	window.location.href = '../simulator';  
 });
 
 document.getElementById('income-button').addEventListener('click', function() {
-	window.location.href = './income';  
+	window.location.href = '../income';  
 });
 
 document.getElementById('landmine-button').addEventListener('click', function() {
-	window.location.href = './landmine';  
+	window.location.href = '../landmine';  
 });
