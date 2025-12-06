@@ -1,4 +1,5 @@
-let activeMode = 'Pulls';
+let activeMode = "Pulls";
+updateLimits()
 
 function updateMode(mode, activeButton) {
 	activeMode = mode;
@@ -11,7 +12,7 @@ function updateMode(mode, activeButton) {
 	updateLimits(mode);
 }
 
-function updateLimits(mode) {
+function updateLimits() {
 	let input = document.getElementById("quantityInput");
 	let range = document.getElementById("quantitySubtext")
 
@@ -20,9 +21,9 @@ function updateLimits(mode) {
 	input.onkeyup = function() {
 		let value = parseInt(this.value, 10);
 
-		if ((mode === "Pulls" && value > 1000) ||
-			(mode === "Rate-Up Pots" && value > 6) ||
-			(mode === "10x Arsenal Pulls" && value > 50)) {
+		if ((activeMode === "Pulls" && value > 1000) ||
+			(activeMode === "Rate-Up Pots" && value > 6) ||
+			(activeMode === "10x Arsenal Pulls" && value > 50)) {
 			this.value = Math.floor(this.value / 10);  
 		}
 
@@ -31,17 +32,17 @@ function updateLimits(mode) {
 		}
 	};
 		
-	if (mode === "Pulls") {
+	if (activeMode === "Pulls") {
 		input.setAttribute("min", 1);
 		input.setAttribute("max", 1000);
 		range.textContent = "Range: 1 - 1000";
 	}
-	else if (mode === "Rate-Up Pots") {
+	else if (activeMode === "Rate-Up Pots") {
 		input.setAttribute("min", 1);
 		input.setAttribute("max", 6);
 		range.textContent = "Range: 1 - 6";
 	}
-	else if (mode === "10x Arsenal Pulls") {
+	else if (activeMode === "10x Arsenal Pulls") {
 		input.setAttribute("min", 1);
 		input.setAttribute("max", 50);
 		range.textContent = "Range: 1 - 50";
@@ -60,11 +61,18 @@ document.getElementById('arsenalbutton').addEventListener('click', function(even
 	updateMode("10x Arsenal Pulls", event.target);
 });
 
-function runSimulation() {
+function runSimulation(event) {
+	event.target.style.backgroundColor = "var(--secondary-accent)";
+	event.target.disabled = true;
+
 	document.getElementById('resultStats').hidden = true;
 	document.getElementById('resultText').hidden = false;
 	document.getElementById('resultText').textContent = "Running Simulation\r\nPlease Wait";
 
+	setTimeout(() => {
+		event.target.style.backgroundColor = "var(--base-color-2)";
+		event.target.disabled = false;
+	}, 250)
 	setTimeout(() => {
 		simulation();
 	}, 0);
