@@ -37,6 +37,7 @@ a {
   height: 4rem;
   width: 100%;
   margin-bottom: 3rem;
+  z-index: 99;
 }
 
 #title a {
@@ -86,7 +87,8 @@ a {
   left: 0;
   bottom: 0;
   color: var(--text-color-2);
-  box-sizing: border-box
+  box-sizing: border-box;
+  z-index: 99;
 }
 
 #footer a {

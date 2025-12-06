@@ -23,10 +23,12 @@
     padding: 0 1vw;
     border-radius: 8px;
     background-color: var(--base-color-2);
+    cursor: pointer;
 }
 
 .activeButton {
     font-weight: bolder;
+    color: var(--secondary-accent);
 }
 
 .inputBody {
@@ -81,6 +83,7 @@
     padding: 0 1vw;
     border-radius: 8px;
     background-color: var(--base-color-2);    
+    cursor: pointer;
 }
 
 #resultContent {
