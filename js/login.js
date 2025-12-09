@@ -3,6 +3,7 @@ import { userLogin, userSignup } from "./database/handle-user.js";
 let isSignup = false;
 
 function loadPopup() {
+	console.log("test")
 	fetch('../components/login.html') 
 	.then(response => response.text())
 	.then(html => {
@@ -41,7 +42,6 @@ function closeLoginPopup() {
 	document.getElementById('overlay').remove();
 }
 
-
 async function handleLoginSubmit(event) {
 	event.preventDefault();
 
@@ -60,4 +60,6 @@ async function handleLoginSubmit(event) {
 	}
 }
 
-document.getElementById("user-menu").addEventListener('click', loadPopup);
+export function loadLoginButton() {
+	document.getElementById("user-menu").addEventListener('click', loadPopup);
+}

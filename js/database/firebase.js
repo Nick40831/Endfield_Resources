@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
 import { getDatabase } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js"
+import { getAuth, setPersistence, browserLocalPersistence, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -17,9 +18,24 @@ const firebaseConfig = {
   measurementId: "G-R39TPYBE1D"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app)
+
+const auth = getAuth(app)
+setPersistence(auth, browserLocalPersistence)
+
+onAuthStateChanged(auth, (user) => {
+  try {
+    if (user && user.displayName) {
+      document.getElementById("user-menu").textContent = user.displayName;
+    } else {
+      document.getElementById("user-menu").textContent = "Welcome, Guest";
+    }
+  }
+  catch {
+    return;
+  }
+});
 
 export { app, database }
 

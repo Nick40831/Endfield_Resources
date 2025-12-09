@@ -27,3 +27,7 @@
 #title p {
   color: var(--secondary-accent);
 }
+
+#user-menu {
+  cursor: pointer;
+}
