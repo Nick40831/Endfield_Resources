@@ -13,7 +13,7 @@ const EXPLOSION_MSGS = [
     "Blast! Mine went off!"
 ];
 
-function loadMine() {
+export function loadMine() {
 	const button = document.createElement('button')
 	const mine = document.createElement('img');
 	const minetext = document.createElement('p')
@@ -57,5 +57,3 @@ function explodeMine(event) {
 		}, 500)
 	}
 }
-
-loadMine()

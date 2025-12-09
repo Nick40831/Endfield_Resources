@@ -1,0 +1,27 @@
+#footer {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--base-color-3);
+  height: 2rem;
+  padding: 0 0 0 1rem;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  color: var(--text-color-2);
+  box-sizing: border-box;
+  z-index: 99;
+}
+
+#footer a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#footer img {
+  height: 2rem;
+  object-fit: contain;
+}
