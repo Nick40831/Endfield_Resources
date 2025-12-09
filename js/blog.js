@@ -1,5 +1,18 @@
 const blogPosts = [
   {
+    title: "User Login - Completed & Change of Direction",
+    date: "December 9, 2025",
+    content: 
+    `
+    I added a user login if you click the "Welcome, Guest" text of the top right. It is just for learning how to connect 
+    to Firebase for now, however, down the line I plan to actually store data like gacha history and other info. For now
+    though, the only thing that is store is email and password (your information will not be shared).
+    <br><br>
+    I changed my soon to come feature from operator leveling to the gacha, as I was not able to find enough information 
+    to create a complete leveling resource calculator. This feature will be resumed after release.
+    `,
+  },
+  {
     title: "Landmine Button - Completed",
     date: "December 5, 2025",
     content: 
