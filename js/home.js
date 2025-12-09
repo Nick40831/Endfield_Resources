@@ -14,6 +14,8 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 });
 
+
+
 document.getElementById('simulator-button').addEventListener('click', function() {
 	window.location.href = '../simulator';  
 });

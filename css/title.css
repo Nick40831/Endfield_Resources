@@ -1,0 +1,29 @@
+#load-title {
+  width: 100%;
+}
+
+#title {
+  display: flex;
+  flex-direction: row;
+  justify-content:space-between;
+	align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: var(--base-color-3);
+  height: 4rem;
+  width: inherit;
+  margin-bottom: 3rem;
+  z-index: 99;
+	padding: 0 1rem;
+	box-sizing: border-box;
+}
+
+#title a {
+  color: var(--primary-accent);
+  padding-left: 1rem;
+}
+
+#title p {
+  color: var(--secondary-accent);
+}

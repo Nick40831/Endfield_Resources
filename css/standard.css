@@ -14,6 +14,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+	width: 100%;
   background-color: var(--base-color-1);
 }
 
@@ -24,25 +25,6 @@ p, div, a, h1, h2, h3, h4, h5 {
 
 a {
   text-decoration: none;
-}
-
-#title {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: var(--base-color-3);
-  height: 4rem;
-  width: 100%;
-  margin-bottom: 3rem;
-  z-index: 99;
-}
-
-#title a {
-  color: var(--primary-accent);
-  padding-left: 1rem;
 }
 
 #content {
@@ -71,34 +53,6 @@ a {
   border-top-right-radius: 0.7rem;
   border-bottom-right-radius: 0.7rem;
   align-content: center;
-}
-
-#footer {
-  position: absolute;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  background-color: var(--base-color-3);
-  height: 2rem;
-  padding: 0 0 0 1rem;
-  width: 100%;
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  color: var(--text-color-2);
-  box-sizing: border-box;
-  z-index: 99;
-}
-
-#footer a {
-  text-decoration: none;
-  color: inherit;
-}
-
-#footer img {
-  height: 2rem;
-  object-fit: contain;
 }
 
 .carousel-wrapper {
