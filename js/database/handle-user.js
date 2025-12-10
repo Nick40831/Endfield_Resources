@@ -1,5 +1,4 @@
-import { app, database } from "./firebase.js"
-import { ref, set, get, child} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js"
+import { app } from "./firebase.js"
 import { getAuth, updateProfile, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 
 const auth = getAuth(app)
@@ -25,4 +24,8 @@ export async function userSignup(email, username, password) {
     alert('Sign Up failed: ' + error.message);
     return false;
   }
+}
+
+export function checkUser() {
+  return auth.currentUser ? auth.currentUser.displayName : "Guest";
 }
