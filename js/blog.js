@@ -1,5 +1,17 @@
 const blogPosts = [
   {
+    title: "Initial Headhunting Implementation - Completed",
+    date: "December 10, 2025",
+    content: 
+    `
+    A rough version of headhunting has been added, go test your luck! In the future, operators will be added and pull 
+    history will follow shortly. I will be trying out some animations for the pull sequence, don't know when that 
+    will come. 
+    <br><br>
+    Thanks again for visiting :3
+    `,
+  },
+  {
     title: "User Login - Completed & Change of Direction",
     date: "December 9, 2025",
     content: 
