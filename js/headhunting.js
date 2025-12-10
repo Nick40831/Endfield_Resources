@@ -107,9 +107,13 @@ function HHanimation() {
 
     newDiv.style.backgroundColor = colorMapping[item] || 'grey'; 
 
-    newDiv.style.height = "6rem";
+    newDiv.style.height = "5rem";
     newDiv.style.aspectRatio = "1";
     newDiv.style.margin = "5px";
+
+    if(item === 7) {
+      newDiv.style.border = "5px var(--primary-accent) solid"
+    }
 
     pullsContainer.appendChild(newDiv);
   });
