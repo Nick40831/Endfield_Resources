@@ -128,7 +128,7 @@ function simulation() {
 	}
 
 	if (arsenalQuantity !== null) {
-		arsenalQuantity *= 1980; 
+		arsenalQuantity *= ARSENAL_PULL_COST; 
 	}
 
 	for (let i = 0; i < sampleSize; i++) {
