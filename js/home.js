@@ -27,3 +27,7 @@ document.getElementById('income-button').addEventListener('click', function() {
 document.getElementById('landmine-button').addEventListener('click', function() {
 	window.location.href = '../landmine';  
 });
+
+document.getElementById('HH-button').addEventListener('click', function() {
+	window.location.href = '../headhunting';  
+});
