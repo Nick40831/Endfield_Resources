@@ -54,6 +54,17 @@ function explodeMine(event) {
 		}, 500); 
 		setTimeout(() => {
 			minetext.hidden = true;
-		}, 500)
+		}, 500);
+
+		updateStatDisplay();
+	}
+}
+
+function updateStatDisplay() {
+  const text = document.getElementById("stat-text");
+
+	if (text) { 
+  	const count = Number(getCookie("landmine_count") || 0);
+  	text.textContent = "You have stepped on " + count + " landmines!"
 	}
 }

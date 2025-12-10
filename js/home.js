@@ -31,3 +31,7 @@ document.getElementById('landmine-button').addEventListener('click', function() 
 document.getElementById('HH-button').addEventListener('click', function() {
 	window.location.href = '../headhunting';  
 });
+
+document.getElementById('AE-button').addEventListener('click', function() {
+	window.location.href = '../arsenal';  
+});

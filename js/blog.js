@@ -1,12 +1,15 @@
 const blogPosts = [
   {
-    title: "Initial Headhunting Implementation - Completed",
+    title: "Initial Headhunting and Arsenal Exchange Implementation - Completed",
     date: "December 10, 2025",
     content: 
     `
-    A rough version of headhunting has been added, go test your luck! In the future, operators will be added and pull 
-    history will follow shortly. I will be trying out some animations for the pull sequence, don't know when that 
-    will come. 
+    A rough version of headhunting and arsenal exchange has been added, go test your luck! In the future, operators
+    /weapons will be added and pull history will follow shortly. I will be trying out some animations for the pull 
+    sequence, don't know when that will come. 
+    <br><br>
+    P.S. The pull rates for 6* weapons seems a bit high, I am pretty sure I did the math right though. I will be adding an
+    email form in the future so users can inform me of mistakes.
     <br><br>
     Thanks again for visiting :3
     `,
