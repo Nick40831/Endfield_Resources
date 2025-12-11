@@ -92,13 +92,9 @@ function AEanimation() {
   simPulledRarities.forEach(item => {
     const newDiv = document.createElement("div");
 
-    newDiv.id = `rarity-${item}`;
+    newDiv.classList.add("pull-divs");
 
     newDiv.style.backgroundColor = colorMapping[item] || 'grey'; 
-
-    newDiv.style.height = "5rem";
-    newDiv.style.aspectRatio = "1";
-    newDiv.style.margin = "5px";
 
     if(item === 7) {
       newDiv.style.border = "5px var(--primary-accent) solid"

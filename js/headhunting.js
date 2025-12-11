@@ -1,4 +1,6 @@
 import { setCookie, getCookie } from './cookie.js';
+import { loadOpSelectButtons } from "./op_select.js"
+import { filterOperators } from "./data/operators.js"
 
 // Constants
 const SOFT_PITY_BASE_RATE = 0.008;
@@ -31,6 +33,12 @@ let simAdded4Stars = 0;
 
 let simPulledRarities = []
 
+export let selectedOps = {
+  rateUpOp: "",
+  limited1Op: "",
+  limited2Op: ""
+}
+
 const colorMapping = {
   4: '#503e73',
   5: '#f3cf5aff',
@@ -40,6 +48,7 @@ const colorMapping = {
 
 checkHHCookies();
 updateHHStats();
+loadOpSelectButtons();
 
 document.getElementById("1-pull-button").onclick = function() { simulatePulls(1); };
 document.getElementById("10-pull-button").onclick = function() { simulatePulls(10); };
@@ -103,13 +112,10 @@ function HHanimation() {
   simPulledRarities.forEach(item => {
     const newDiv = document.createElement("div");
 
-    newDiv.id = `rarity-${item}`;
+    newDiv.classList.add("pull-divs");
 
     newDiv.style.backgroundColor = colorMapping[item] || 'grey'; 
-
-    newDiv.style.height = "5rem";
-    newDiv.style.aspectRatio = "1";
-    newDiv.style.margin = "5px";
+    newDiv.textContent = operatorSelect(item);
 
     if(item === 7) {
       newDiv.style.border = "5px var(--primary-accent) solid"
@@ -117,6 +123,27 @@ function HHanimation() {
 
     pullsContainer.appendChild(newDiv);
   });
+}
+
+function operatorSelect(rarity) {
+  if (rarity === 4) {
+    const fourStarOps = filterOperators({ rarity: 4 })
+    var keys = Object.keys(fourStarOps);
+    return fourStarOps[keys[keys.length * Math.random() << 0]].name
+  }
+  if (rarity === 5) {
+    const fiveStarOps = filterOperators({ rarity: 5 })
+    var keys = Object.keys(fiveStarOps);
+    return fiveStarOps[keys[keys.length * Math.random() << 0]].name
+  }
+  if (rarity === 6) {
+    const sixStarOps = filterOperators({ rarity: 6 })
+    var keys = Object.keys(sixStarOps);
+    return sixStarOps[keys[keys.length * Math.random() << 0]].name
+  }
+  if (rarity === 7) {
+    return selectedOps["rateUpOp"]
+  }
 }
 
 function simulatePulls(num = 1) {
@@ -131,7 +158,7 @@ function simulatePulls(num = 1) {
   simAdded5Stars = 0;
   simAdded4Stars = 0;
 
-  simPulledRarities = []
+  simPulledRarities = [];
 
   for (let _ = 0; _ < num; _++) {
     pulls++;

@@ -14,11 +14,21 @@
 #pull-container {
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: inherit;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
-  height: 6rem
+  height: 6rem;
+  border: 2px black solid;
+  margin: 25px 10px;
+}
+
+.pull-divs {
+  flex: 1 1 auto;
+  max-height: 5rem;
+  max-width: 5rem;
+  aspect-ratio: 1;
+  margin: 5px;
+  box-sizing: border-box;
 }
 
 #total-stats {
