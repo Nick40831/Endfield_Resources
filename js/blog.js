@@ -1,5 +1,15 @@
 const blogPosts = [
   {
+    title: "Headhunting and Arsenal Exchange -  Rate-Up Update",
+    date: "December 12, 2025",
+    content: 
+    `
+    Rate-up selection has been added to both headhunting and arsenal exchange. The selections are stored in cookies 
+    so they only need to be selected on your first visit. I am going to work on pull history now and get some exposure
+    to using firebase DB.
+    `,
+  },
+  {
     title: "Initial Headhunting and Arsenal Exchange Implementation - Completed",
     date: "December 10, 2025",
     content: 
