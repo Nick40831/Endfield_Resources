@@ -1,4 +1,6 @@
 import { setCookie, getCookie } from './cookie.js';
+import { loadWeaponSelectButton } from "./weapon_select.js"
+import { filterWeapons } from "./data/weapons.js"
 
 // Constants
 const HARD_PITY_INTERVAL = 40;
@@ -33,8 +35,14 @@ const colorMapping = {
   7: '#fd4f3fff'
 }
 
+export let selectedWeapon = {
+  rateUpWeapon: "",
+}
+
 checkAECookies();
 updateAEStats();
+loadSelectedWeapon();
+loadWeaponSelectButton();
 
 document.getElementById("10-pull-button").onclick = function() { simulatePulls(10); };
 
@@ -47,6 +55,7 @@ function checkAECookies() {
   total5StarCount = Number(getCookie("AE_total5StarCount") || 0);
   total4StarCount = Number(getCookie("AE_total4StarCount") || 0);
   pityCounter = Number(getCookie("AE_pityCounter") || 0);
+  selectedWeapon["rateUpWeapon"] = String(getCookie("AE_rateUpWeapon") || "");
 }
 
 function updateAECookies() {
@@ -58,6 +67,12 @@ function updateAECookies() {
   setCookie("AE_total5StarCount", total5StarCount);
   setCookie("AE_total4StarCount", total4StarCount);
   setCookie("AE_pityCounter", pityCounter);
+}
+
+function loadSelectedWeapon() {
+  if(selectedWeapon["rateUpWeapon"] != "") {
+    document.getElementById("rate-up-button").textContent = selectedWeapon["rateUpWeapon"]
+  }
 }
 
 function updateAEStats() {
@@ -92,13 +107,10 @@ function AEanimation() {
   simPulledRarities.forEach(item => {
     const newDiv = document.createElement("div");
 
-    newDiv.id = `rarity-${item}`;
+    newDiv.classList.add("pull-divs");
 
     newDiv.style.backgroundColor = colorMapping[item] || 'grey'; 
-
-    newDiv.style.height = "5rem";
-    newDiv.style.aspectRatio = "1";
-    newDiv.style.margin = "5px";
+    newDiv.textContent = weaponSelect(item);
 
     if(item === 7) {
       newDiv.style.border = "5px var(--primary-accent) solid"
@@ -106,6 +118,33 @@ function AEanimation() {
 
     pullsContainer.appendChild(newDiv);
   });
+}
+
+function weaponSelect(rarity) {
+  if (rarity === 4) {
+    const fourStarWeapons = filterWeapons({ rarity: 4 })
+    var keys = Object.keys(fourStarWeapons);
+    return fourStarWeapons[keys[keys.length * Math.random() << 0]].name
+  }
+  if (rarity === 5) {
+    const fiveStarWeapons = filterWeapons({ rarity: 5 })
+    var keys = Object.keys(fiveStarWeapons);
+    return fiveStarWeapons[keys[keys.length * Math.random() << 0]].name
+  }
+  if (rarity === 6) {
+    const sixStarWeapons = filterWeapons({ rarity: 6 });
+    const keys = Object.keys(sixStarWeapons);
+
+    const filteredKeys = keys.filter(key => {
+      const weaponName = sixStarWeapons[key].name;
+      return !Object.values(selectedWeapon).includes(weaponName); 
+    });
+
+    return sixStarWeapons[filteredKeys[filteredKeys.length * Math.random() << 0]].name;
+  }
+  if (rarity === 7) {
+    return selectedWeapon["rateUpWeapon"];
+  }
 }
 
 function simulatePulls(num = 1) {

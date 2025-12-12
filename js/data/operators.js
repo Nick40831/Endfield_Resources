@@ -1,4 +1,4 @@
-export const operators = [
+const operators = [
   { name: "Akekuri", role: "Vanguard", element: "Heat", weapon: "Sword", rarity: 4 },
   { name: "Alesh", role: "Vanguard", element: "Cryo", weapon: "Sword", rarity: 5 },
   { name: "Antal", role: "Support", element: "Electric", weapon: "Orbiter", rarity: 4 },
@@ -28,11 +28,11 @@ export const operators = [
 //   operatorsArray.map(op => [op.name, { ...op, name: undefined }])
 // );
 
-// function filterOperators(operators, criteria) {
-//   return operators.filter(op =>
-//     Object.entries(criteria).every(([key, value]) => op[key] === value)
-//   );
-// }
+export function filterOperators(criteria) {
+  return operators.filter(op =>
+    Object.entries(criteria).every(([key, value]) => op[key] === value)
+  );
+}
 
 // // Find all rarity 6 operators
 // const rarity6 = filterOperators(operatorsArray, { rarity: 6 });

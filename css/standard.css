@@ -36,7 +36,7 @@ a {
   background-color: var(--base-color-3);
   height: 3rem;
   width: 15rem;
-  margin: 1rem 0 2rem 0;
+  margin: 1rem 0 1rem 0;
   padding-left: 1rem;
   border-top-right-radius: 0.7rem;
   border-bottom-right-radius: 0.7rem;
@@ -48,7 +48,7 @@ a {
   background-color: var(--base-color-3);
   height: 2.5rem;
   width: 10rem;
-  margin: 3rem 0 1rem 0;
+  margin: 1rem 0 1rem 0;
   padding-left: 1rem;
   border-top-right-radius: 0.7rem;
   border-bottom-right-radius: 0.7rem;

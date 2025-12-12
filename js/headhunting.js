@@ -1,21 +1,24 @@
 import { setCookie, getCookie } from './cookie.js';
+import { loadOpSelectButtons } from "./op_select.js"
+import { filterOperators } from "./data/operators.js"
 
 // Constants
 const SOFT_PITY_BASE_RATE = 0.008;
 const SOFT_PITY_INCREMENT = 0.05;
+const LIMIT_SIX_STAR_RATE = 0.1428;
 const HARD_PITY_INTERVAL = 80;
-const LIMITED_PITY_INTERVAL = 120;
-const DUPLICATE_PITY_INTERVAL = 240;
+const RATEUP_GUARANTEE = 120;
+const RATE_UP_TOKEN_INTERVAL = 240;
 const FIVE_STAR_RATE = 0.08;
 const GUARANTEED_5_STAR_INTERVAL = 10;
 const SIX_STAR_ARSENAL = 2000;
 const FIVE_STAR_ARSENAL = 200;
 const FOUR_STAR_ARSENAL = 20;
-const ARSENAL_PULL_COST = 1980;
 
 let pulls = 0;
 let gotLimited = false;
-let limited6StarCount = 0;
+let rate6StarCount = 0;
+let limit6StarCount = 0;
 let total6StarCount = 0;
 let guaranteed5StarCounter = 0;
 let total5StarCount = 0;
@@ -31,15 +34,24 @@ let simAdded4Stars = 0;
 
 let simPulledRarities = []
 
+export let selectedOps = {
+  rateUpOp: "",
+  limited1Op: "",
+  limited2Op: ""
+}
+
 const colorMapping = {
   4: '#503e73',
   5: '#f3cf5aff',
   6: '#fd4f3fff',
-  7: '#fd4f3fff'
+  7: '#fd4f3fff',
+  8: '#fd4f3fff'
 }
 
 checkHHCookies();
 updateHHStats();
+loadSelectedOps();
+loadOpSelectButtons();
 
 document.getElementById("1-pull-button").onclick = function() { simulatePulls(1); };
 document.getElementById("10-pull-button").onclick = function() { simulatePulls(10); };
@@ -47,25 +59,45 @@ document.getElementById("10-pull-button").onclick = function() { simulatePulls(1
 function checkHHCookies() {
   pulls = Number(getCookie("HH_pulls") || 0);
   gotLimited = Boolean(getCookie("HH_gotLimited") || false)
-  limited6StarCount = Number(getCookie("HH_limited6StarCount") || 0);
+  rate6StarCount = Number(getCookie("HH_rate6StarCount") || 0);
+  limit6StarCount = Number(getCookie("HH_limit6StarCount") || 0);
   total6StarCount = Number(getCookie("HH_total6StarCount") || 0);
   guaranteed5StarCounter = Number(getCookie("HH_guaranteed5StarCounter") || 0);
   total5StarCount = Number(getCookie("HH_total5StarCount") || 0);
   total4StarCount = Number(getCookie("HH_total4StarCount") || 0);
   pityCounter = Number(getCookie("HH_pityCounter") || 0);
   pityRate = Number(getCookie("HH_pityRate") || SOFT_PITY_BASE_RATE);
+  selectedOps["rateUpOp"] = String(getCookie("HH_rateUpOp") || "");
+  selectedOps["limited1Op"] = String(getCookie("HH_limited1Op") || "");
+  selectedOps["limited2Op"] = String(getCookie("HH_limited2Op") || "");
 }
-
+ 
 function updateHHCookies() {
   setCookie("HH_pulls", pulls);
   setCookie("HH_gotLimited", gotLimited);
-  setCookie("HH_limited6StarCount", limited6StarCount);
+  setCookie("HH_rate6StarCount", rate6StarCount);
+  setCookie("HH_limit6StarCount", limit6StarCount);
   setCookie("HH_total6StarCount", total6StarCount);
   setCookie("HH_guaranteed5StarCounter", guaranteed5StarCounter);
   setCookie("HH_total5StarCount", total5StarCount);
   setCookie("HH_total4StarCount", total4StarCount);
   setCookie("HH_pityCounter", pityCounter);
-  setCookie("HH_pityRate", pityRate);
+}
+
+function loadSelectedOps() {
+  for(const op in selectedOps) {
+    if(selectedOps[op] != "") {
+      if(op === "rateUpOp") {
+        document.getElementById("rate-up-button").textContent = selectedOps[op]
+      }
+      else if(op === "limited1Op") {
+        document.getElementById("limited1-button").textContent = selectedOps[op]
+      }
+      else if(op === "limited2Op") {
+        document.getElementById("limited2-button").textContent = selectedOps[op]
+      }
+    }
+  }
 }
 
 function updateHHStats() {
@@ -77,8 +109,9 @@ function updateHHStats() {
 		<p>---------------------------------------------</p>
     <p><strong>Total pulls performed:</strong> ${pulls}</p>
 		<ul>
-			<li><strong>Rate-up 6* pulls:</strong> ${limited6StarCount} rate-up operators</li>
-			<li><strong>Number of 6* (Including rate-up 6*):</strong> ${total6StarCount} operators</li>
+			<li><strong>Rate-up 6* pulls:</strong> ${rate6StarCount} rate-up operators</li>
+      <li><strong>Limited 6* pulls:</strong> ${limit6StarCount} limited operators</li>
+			<li><strong>Number of 6* (Including rate-up and limited 6*):</strong> ${total6StarCount} operators</li>
 			<li><strong>Number of 5*:</strong> ${total5StarCount} operators</li>
 			<li><strong>Number of 4*:</strong> ${total4StarCount} operators</li>
 			<li><strong>Arsenal tokens:</strong> ${arsenalCount} tokens</li>
@@ -103,20 +136,47 @@ function HHanimation() {
   simPulledRarities.forEach(item => {
     const newDiv = document.createElement("div");
 
-    newDiv.id = `rarity-${item}`;
+    newDiv.classList.add("pull-divs");
 
     newDiv.style.backgroundColor = colorMapping[item] || 'grey'; 
+    newDiv.textContent = operatorSelect(item);
 
-    newDiv.style.height = "5rem";
-    newDiv.style.aspectRatio = "1";
-    newDiv.style.margin = "5px";
-
-    if(item === 7) {
+    if(item === 8) {
       newDiv.style.border = "5px var(--primary-accent) solid"
     }
 
     pullsContainer.appendChild(newDiv);
   });
+}
+
+function operatorSelect(rarity) {
+  if (rarity === 4) {
+    const fourStarOps = filterOperators({ rarity: 4 })
+    var keys = Object.keys(fourStarOps);
+    return fourStarOps[keys[keys.length * Math.random() << 0]].name
+  }
+  if (rarity === 5) {
+    const fiveStarOps = filterOperators({ rarity: 5 })
+    var keys = Object.keys(fiveStarOps);
+    return fiveStarOps[keys[keys.length * Math.random() << 0]].name
+  }
+  if (rarity === 6) {
+    const sixStarOps = filterOperators({ rarity: 6 });
+    const keys = Object.keys(sixStarOps);
+
+    const filteredKeys = keys.filter(key => {
+      const operatorName = sixStarOps[key].name;
+      return !Object.values(selectedOps).includes(operatorName); 
+    });
+
+    return sixStarOps[filteredKeys[filteredKeys.length * Math.random() << 0]].name;
+  }
+  if (rarity === 7) {
+    return Math.random() < 0.5 ? selectedOps["limited1Op"] : selectedOps["limited2Op"];
+  }
+  if (rarity === 8) {
+    return selectedOps["rateUpOp"];
+  }
 }
 
 function simulatePulls(num = 1) {
@@ -131,7 +191,7 @@ function simulatePulls(num = 1) {
   simAdded5Stars = 0;
   simAdded4Stars = 0;
 
-  simPulledRarities = []
+  simPulledRarities = [];
 
   for (let _ = 0; _ < num; _++) {
     pulls++;
@@ -139,35 +199,39 @@ function simulatePulls(num = 1) {
     pityCounter++;
 
     // Add limited 6* for every 240 pulls
-    if (pulls % DUPLICATE_PITY_INTERVAL === 0) {
-      limited6StarCount++;
+    if (pulls % RATE_UP_TOKEN_INTERVAL === 0) {
+      rate6StarCount++;
       simAddedLimited6Stars++;
       total6StarCount++;
       simAdded6Stars++;
       pityRate = SOFT_PITY_BASE_RATE;
-      simPulledRarities.push(7)
+      simPulledRarities.push(8)
     }
 
     // Add limited 6* on the 120th pull
-    if (!gotLimited && pulls === LIMITED_PITY_INTERVAL) {
-      limited6StarCount++;
+    if (!gotLimited && pulls === RATEUP_GUARANTEE) {
+      rate6StarCount++;
       simAddedLimited6Stars++;
       total6StarCount++;
       simAdded6Stars++;
       pityRate = SOFT_PITY_BASE_RATE;
       pityCounter = 0;
       guaranteed5StarCounter = 0;
-      simPulledRarities.push(7)
+      simPulledRarities.push(8)
     }
 
     // If at hard pity, pull 6* operator, with 50% chance of being limited 6*
     if (pityCounter === HARD_PITY_INTERVAL) {
       pityCounter = 0;
       if (Math.random() < 0.5) {
-        limited6StarCount++;
+        rate6StarCount++;
         simAddedLimited6Stars++;
         gotLimited = true;
+        simPulledRarities.push(8)
+      }
+      else if (Math.random() < LIMIT_SIX_STAR_RATE) {
         simPulledRarities.push(7)
+        limit6StarCount++;
       }
       else {
         simPulledRarities.push(6)
@@ -184,10 +248,14 @@ function simulatePulls(num = 1) {
       if (Math.random() < pityRate) {
         pityCounter = 0;
         if (Math.random() < 0.5) {
-          limited6StarCount++;
+          rate6StarCount++;
           simAddedLimited6Stars++;
           gotLimited = true;
+          simPulledRarities.push(8)
+        }
+        else if (Math.random() < LIMIT_SIX_STAR_RATE) {
           simPulledRarities.push(7)
+          limit6StarCount++;
         }
         else {
           simPulledRarities.push(6)

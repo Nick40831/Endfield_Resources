@@ -29,7 +29,7 @@ onAuthStateChanged(auth, (user) => {
     if (user && user.displayName) {
       document.getElementById("user-menu").textContent = user.displayName;
     } else {
-      document.getElementById("user-menu").textContent = "Welcome, Guest";
+      document.getElementById("user-menu").textContent = "Guest";
     }
   }
   catch {

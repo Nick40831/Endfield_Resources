@@ -24,8 +24,12 @@
   padding-left: 1rem;
 }
 
-#title p {
-  color: var(--secondary-accent);
+#title button {
+  font-size: 1.25rem;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: var(--base-color-2);
+  color: var(--primary-accent);
 }
 
 #user-menu {

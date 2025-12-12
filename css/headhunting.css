@@ -14,11 +14,26 @@
 #pull-container {
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: inherit;
+  height: auto;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
-  height: 6rem
+  max-height: 7rem;
+  border: 2px black solid;
+  flex: 1 1 0;
+}
+
+.pull-divs {
+  flex: 1 1 0;
+  max-height: 6rem;
+  max-width: 6rem;
+  aspect-ratio: 1;
+  margin: 5px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 #total-stats {
@@ -36,4 +51,72 @@
   border-radius: 8px;
   background-color: var(--base-color-2);
   cursor: pointer;
+}
+
+#hh-container {
+  display: flex;
+  height: 100%; 
+  width: inherit;
+  margin: 0px 50px;
+  gap: 50px;
+}
+
+#hh-left-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: auto;
+  flex: 4;
+  gap: 30px;
+}
+
+#hh-right-section {
+  display: flex;
+  height: inherit;
+  flex: 1;
+  gap: 20px;
+}
+
+#hh-left-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: auto;
+}
+
+#hh-right-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+}
+
+.op-buttons {
+  aspect-ratio: 1;
+  width: 100%;
+  margin: 10px;
+  background-color: var(--base-color-2);
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+}
+
+#hh-left-button button {
+  border: 3px var(--primary-accent) solid;
+}
+
+#hh-right-buttons button {
+  border: 3px var(--base-color-3) solid;
+}
+
+.op-buttons:focus {
+  outline: none;
+}
+
+.op-buttons img {
+  width: 100%;
 }

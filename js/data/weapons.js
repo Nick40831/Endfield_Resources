@@ -38,3 +38,9 @@ export const weapons = [
   { name: "Wedge", type: "Gun", rarity: 6 },
   { name: "Wild Wanderer", type: "Orbiter", rarity: 5 }
 ];
+
+export function filterWeapons(criteria) {
+  return weapons.filter(op =>
+    Object.entries(criteria).every(([key, value]) => op[key] === value)
+  );
+}

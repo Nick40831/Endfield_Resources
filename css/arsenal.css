@@ -14,11 +14,73 @@
 #pull-container {
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: inherit;
+  height: auto;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
-  height: 6rem
+  max-height: 7rem;
+  border: 2px black solid;
+  flex: 1 1 0;
+}
+
+.pull-divs {
+  flex: 1 1 0;
+  max-height: 6rem;
+  max-width: 6rem;
+  aspect-ratio: 1;
+  margin: 5px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+#ae-container {
+  display: flex;
+  height: 100%; 
+  width: inherit;
+  margin: 0px 50px;
+  gap: 50px;
+}
+
+#ae-left-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: auto;
+  flex: 4;
+  gap: 30px;
+}
+
+#ae-right-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: auto;
+  flex: 1;
+}
+
+.weapon-button {
+  aspect-ratio: 1;
+  width: 100%;
+  margin: 10px;
+  background-color: var(--base-color-2);
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+}
+
+#ae-right-section button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: auto;
 }
 
 #total-stats {
