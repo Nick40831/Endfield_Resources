@@ -37,18 +37,19 @@
 }
 
 #portait-button {
-	height: 30%;
+	width: 30%;
 	aspect-ratio: 1;
 	box-sizing: border-box;
+	flex-wrap: wrap;
 }
 
-/* ::-webkit-scrollbar {
+.popup ::-webkit-scrollbar {
 	height: auto;
 	width: 10px;
 	visibility: visible;
 }
 
-::-webkit-scrollbar-thumb {
+.popup ::-webkit-scrollbar-thumb {
 	background-color: grey;
 	border-radius: 4px;
-} */
+}

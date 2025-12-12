@@ -50,6 +50,7 @@ const colorMapping = {
 
 checkHHCookies();
 updateHHStats();
+loadSelectedOps();
 loadOpSelectButtons();
 
 document.getElementById("1-pull-button").onclick = function() { simulatePulls(1); };
@@ -66,8 +67,11 @@ function checkHHCookies() {
   total4StarCount = Number(getCookie("HH_total4StarCount") || 0);
   pityCounter = Number(getCookie("HH_pityCounter") || 0);
   pityRate = Number(getCookie("HH_pityRate") || SOFT_PITY_BASE_RATE);
+  selectedOps["rateUpOp"] = String(getCookie("HH_rateUpOp") || "");
+  selectedOps["limited1Op"] = String(getCookie("HH_limited1Op") || "");
+  selectedOps["limited2Op"] = String(getCookie("HH_limited2Op") || "");
 }
-
+ 
 function updateHHCookies() {
   setCookie("HH_pulls", pulls);
   setCookie("HH_gotLimited", gotLimited);
@@ -78,7 +82,22 @@ function updateHHCookies() {
   setCookie("HH_total5StarCount", total5StarCount);
   setCookie("HH_total4StarCount", total4StarCount);
   setCookie("HH_pityCounter", pityCounter);
-  setCookie("HH_pityRate", pityRate);
+}
+
+function loadSelectedOps() {
+  for(const op in selectedOps) {
+    if(selectedOps[op] != "") {
+      if(op === "rateUpOp") {
+        document.getElementById("rate-up-button").textContent = selectedOps[op]
+      }
+      else if(op === "limited1Op") {
+        document.getElementById("limited1-button").textContent = selectedOps[op]
+      }
+      else if(op === "limited2Op") {
+        document.getElementById("limited2-button").textContent = selectedOps[op]
+      }
+    }
+  }
 }
 
 function updateHHStats() {
