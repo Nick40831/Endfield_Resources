@@ -2,19 +2,17 @@ import { userLogin, userSignup, checkUser } from "./database/handle-user.js";
 
 let isSignup = false;
 
-function loadPopup() {
-	if (checkUser() === "Guest") {
-		fetch('../components/login.html') 
-		.then(response => response.text())
-		.then(html => {
-			document.body.insertAdjacentHTML('beforeend', html);
+export function loadLogin() {
+	fetch('../components/login.html') 
+	.then(response => response.text())
+	.then(html => {
+		document.body.insertAdjacentHTML('beforeend', html);
 
-			document.getElementById('overlay').addEventListener('click', closeLoginPopup);
-			document.getElementById('submit-button').addEventListener('click', handleLoginSubmit);
-			document.getElementById('switch-form').addEventListener('click', toggleFormMode);
-		})
-		.catch(error => console.error('Error loading popup HTML:', error));
-	}
+		document.getElementById('overlay').addEventListener('click', closeLoginPopup);
+		document.getElementById('submit-button').addEventListener('click', handleLoginSubmit);
+		document.getElementById('switch-form').addEventListener('click', toggleFormMode);
+	})
+	.catch(error => console.error('Error loading popup HTML:', error));
 }
 
 function toggleFormMode() {
@@ -59,8 +57,4 @@ async function handleLoginSubmit(event) {
 			closeLoginPopup();
 		}
 	}
-}
-
-export function loadLoginButton() {
-	document.getElementById("user-menu").addEventListener('click', loadPopup);
 }
