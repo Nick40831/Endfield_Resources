@@ -16,7 +16,7 @@ const FIVE_STAR_ARSENAL = 200;
 const FOUR_STAR_ARSENAL = 20;
 
 let pulls = 0;
-let gotLimited = false;
+let gotRateUp = false;
 let rate6StarCount = 0;
 let limit6StarCount = 0;
 let total6StarCount = 0;
@@ -58,7 +58,7 @@ document.getElementById("10-pull-button").onclick = function() { simulatePulls(1
 
 function checkHHCookies() {
   pulls = Number(getCookie("HH_pulls") || 0);
-  gotLimited = Boolean(getCookie("HH_gotLimited") || false)
+  gotRateUp = Boolean(getCookie("HH_gotRateUp") || false)
   rate6StarCount = Number(getCookie("HH_rate6StarCount") || 0);
   limit6StarCount = Number(getCookie("HH_limit6StarCount") || 0);
   total6StarCount = Number(getCookie("HH_total6StarCount") || 0);
@@ -74,7 +74,7 @@ function checkHHCookies() {
  
 function updateHHCookies() {
   setCookie("HH_pulls", pulls);
-  setCookie("HH_gotLimited", gotLimited);
+  setCookie("HH_gotRateUp", gotRateUp);
   setCookie("HH_rate6StarCount", rate6StarCount);
   setCookie("HH_limit6StarCount", limit6StarCount);
   setCookie("HH_total6StarCount", total6StarCount);
@@ -119,7 +119,7 @@ function updateHHStats() {
     <ul>
     	<li><strong>Pulls until guaranteed 6*:</strong> ${80 - pityCounter} pulls</li>
 			<li><strong>Pulls until guaranteed 5*:</strong> ${10 - guaranteed5StarCounter} pulls</li>
-      ${gotLimited ? '' : `<p><strong>Pulls untill guaranteed rate-up 6*:</strong> ${120 - pulls}</p>`}
+      ${gotRateUp ? '' : `<p><strong>Pulls untill guaranteed rate-up 6*:</strong> ${120 - pulls}</p>`}
       <br>
 			<li><strong>Pity rate:</strong> ${pityRate.toFixed(2)}</li>
 		</ul>
@@ -209,7 +209,7 @@ function simulatePulls(num = 1) {
     }
 
     // Add limited 6* on the 120th pull
-    if (!gotLimited && pulls === RATEUP_GUARANTEE) {
+    if (!gotRateUp && pulls === RATEUP_GUARANTEE) {
       rate6StarCount++;
       simAddedLimited6Stars++;
       total6StarCount++;
@@ -226,7 +226,7 @@ function simulatePulls(num = 1) {
       if (Math.random() < 0.5) {
         rate6StarCount++;
         simAddedLimited6Stars++;
-        gotLimited = true;
+        gotRateUp = true;
         simPulledRarities.push(8)
       }
       else if (Math.random() < LIMIT_SIX_STAR_RATE) {
@@ -250,7 +250,7 @@ function simulatePulls(num = 1) {
         if (Math.random() < 0.5) {
           rate6StarCount++;
           simAddedLimited6Stars++;
-          gotLimited = true;
+          gotRateUp = true;
           simPulledRarities.push(8)
         }
         else if (Math.random() < LIMIT_SIX_STAR_RATE) {
