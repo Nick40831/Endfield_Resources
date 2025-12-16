@@ -302,3 +302,9 @@ function simulatePulls(num = 1) {
   document.getElementById("1-pull-button").disabled = false;
   document.getElementById("10-pull-button").disabled = false;
 }
+
+function addHHHistory(userId, name) {
+  set(ref(database, userId + "/hh-history/"), {
+    operatorName
+  });
+}
