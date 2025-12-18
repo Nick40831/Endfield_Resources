@@ -360,50 +360,52 @@ async function limitHHHistory(hhHistoryRef) {
 }
 
 async function displayHHHistory() {
-  const userId = auth.currentUser?.uid;
-  if(!userId) {
-    return;
-  }
-
   try {
-    const HHHistoryRef = ref(database, userId + "/hh-history/");;
+    auth.authStateReady().then(async () => {
+      const user = auth.currentUser;
+      if(!user) {
+        return;
+      }
+      const userId = user.uid;
 
-    const historyContainer = document.getElementById("hh-history");
-    if (!historyContainer) return;
+      const HHHistoryRef = ref(database, userId + "/hh-history/");
 
-    historyContainer.innerHTML = "";
+      const historyContainer = document.getElementById("hh-history");
+      if (!historyContainer) return;
 
-    const historyQuery = query(HHHistoryRef, orderByChild("date"));
-    const snapshot = await get(historyQuery);
+      historyContainer.innerHTML = "";
 
-    if (!snapshot.exists()) {
-      historyContainer.innerHTML = "<p>No history yet.</p>";
-      return;
-    }
+      const historyQuery = query(HHHistoryRef, orderByChild("date"));
+      const snapshot = await get(historyQuery);
 
-    const entries = snapshot.val();
+      if (!snapshot.exists()) {
+        historyContainer.innerHTML = "<p>No history yet.</p>";
+        return;
+      }
 
-    const sortedEntries = Object.values(entries).sort(
-      (a, b) => new Date(b.date) - new Date(a.date)
-    );
+      const entries = snapshot.val();
 
-    for (const entry of sortedEntries) {
-      const item = document.createElement("div");
-      item.className = "hh-history-item";
+      const sortedEntries = Object.values(entries).sort(
+        (a, b) => new Date(b.date) - new Date(a.date)
+      );
 
-      const op = document.createElement("div");
-      op.className = "hh-weapon";
-      op.textContent = entry.operatorName;
+      for (const entry of sortedEntries) {
+        const item = document.createElement("div");
+        item.className = "hh-history-item";
 
-      const date = document.createElement("div");
-      date.className = "hh-date";
-      date.textContent = new Date(entry.date).toLocaleString();
+        const op = document.createElement("div");
+        op.className = "hh-weapon";
+        op.textContent = entry.operatorName;
 
-      item.appendChild(op);
-      item.appendChild(date);
-      historyContainer.appendChild(item);
-    }
+        const date = document.createElement("div");
+        date.className = "hh-date";
+        date.textContent = new Date(entry.date).toLocaleString();
 
+        item.appendChild(op);
+        item.appendChild(date);
+        historyContainer.appendChild(item);
+      }
+    })
   } catch (error) {
     console.error("Error rendering AE history:", error);
   }
