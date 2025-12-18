@@ -1,5 +1,5 @@
 import { app } from "./firebase.js"
-import { getAuth, updateProfile, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+import { getAuth, updateProfile, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 const auth = getAuth(app)
 
 export async function userLogin(email, password) {
@@ -32,6 +32,17 @@ export async function userLogout() {
   } catch (error) {
     console.error('Log out Error:', error.message);
     alert('Log out failed: ' + error.message);
+    return false;
+  }
+}
+
+export async function userPasswordReset(email) {
+  try {
+    await sendPasswordResetEmail(auth, email);
+    return true;
+  } catch (error) {
+    console.error('Password Reset Error:', error.message);
+    alert('Password Reset failed: ' + error.message);
     return false;
   }
 }

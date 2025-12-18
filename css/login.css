@@ -30,8 +30,15 @@
 	width: 100%;
 }
 
-#login-form #switch-form {
-	font-size: 0.75rem;
+#sub-links {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin: 0px 5px 25px 5px;
+}
+
+#sub-links p {
+	font-size: 0.7rem;
 	text-align: end;
 	cursor: pointer;
 }
