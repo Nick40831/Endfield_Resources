@@ -54,6 +54,7 @@ checkHHCookies();
 updateHHStats();
 loadSelectedOps();
 loadOpSelectButtons();
+displayHHHistory();
 
 document.getElementById("1-pull-button").onclick = function() { simulatePulls(1); };
 document.getElementById("10-pull-button").onclick = function() { simulatePulls(10); };
@@ -151,6 +152,7 @@ function HHanimation() {
     pullsContainer.appendChild(newDiv);
     addHHHistory(pulledOp);
   });
+  displayHHHistory();
 }
 
 function operatorSelect(rarity) {
@@ -322,14 +324,14 @@ async function addHHHistory(operatorName) {
       date, operatorName
     });
 
-    await limitHistory(HHHistoryRef);
+    await limitHHHistory(HHHistoryRef);
   }
   catch(err) {
     console.error("Error adding history entry: ", err);
   }
 }
 
-async function limitHistory(hhHistoryRef) {
+async function limitHHHistory(hhHistoryRef) {
   try {
     const historyQuery = query(hhHistoryRef, orderByChild("date"));
     let snapshot = await get(historyQuery);
@@ -354,5 +356,55 @@ async function limitHistory(hhHistoryRef) {
     }
   } catch (error) {
     console.error("Error checking and limiting history: ", error);
+  }
+}
+
+async function displayHHHistory() {
+  const userId = auth.currentUser?.uid;
+  if(!userId) {
+    return;
+  }
+
+  try {
+    const HHHistoryRef = ref(database, userId + "/hh-history/");;
+
+    const historyContainer = document.getElementById("hh-history");
+    if (!historyContainer) return;
+
+    historyContainer.innerHTML = "";
+
+    const historyQuery = query(HHHistoryRef, orderByChild("date"));
+    const snapshot = await get(historyQuery);
+
+    if (!snapshot.exists()) {
+      historyContainer.innerHTML = "<p>No history yet.</p>";
+      return;
+    }
+
+    const entries = snapshot.val();
+
+    const sortedEntries = Object.values(entries).sort(
+      (a, b) => new Date(b.date) - new Date(a.date)
+    );
+
+    for (const entry of sortedEntries) {
+      const item = document.createElement("div");
+      item.className = "hh-history-item";
+
+      const op = document.createElement("div");
+      op.className = "hh-weapon";
+      op.textContent = entry.operatorName;
+
+      const date = document.createElement("div");
+      date.className = "hh-date";
+      date.textContent = new Date(entry.date).toLocaleString();
+
+      item.appendChild(op);
+      item.appendChild(date);
+      historyContainer.appendChild(item);
+    }
+
+  } catch (error) {
+    console.error("Error rendering AE history:", error);
   }
 }

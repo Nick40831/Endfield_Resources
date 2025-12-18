@@ -99,3 +99,30 @@
   background-color: var(--base-color-2);
   cursor: pointer;
 }
+
+#ae-history {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 25px 300px;
+}
+
+.ae-history-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: var(--base-color-2);
+}
+
+.ae-weapon {
+  font-weight: bold;
+  color: black;
+}
+
+.ae-date {
+  font-size: 0.85rem;
+  color: var(--secondary-accent);
+}
