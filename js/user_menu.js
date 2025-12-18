@@ -1,4 +1,4 @@
-import { userLogout, checkUser } from "./database/handle-user.js";
+import { userLogout } from "./database/handle-user.js";
 
 export function loadUserMenu() {
   fetch('../components/user_menu.html') 
