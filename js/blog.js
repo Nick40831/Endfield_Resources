@@ -1,5 +1,17 @@
 const blogPosts = [
   {
+    title: "Headhunting and Arsenal Exchange -  Pull History Update",
+    date: "December 18, 2025",
+    content: 
+    `
+    Pull history is now stored and displayed on each of the gacha pages! Only up to the last 80 pulls is stored, 
+    which may be lowered in the future for free firebase storage limits. You must be logged in as pulls are stored
+    under a user ID. 
+
+    I am learning a bit of React right now and will probably be transitioning to using it at this point. 
+    `,
+  },
+  {
     title: "Headhunting and Arsenal Exchange -  Rate-Up Update",
     date: "December 12, 2025",
     content: 
