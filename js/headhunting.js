@@ -1,6 +1,8 @@
 import { setCookie, getCookie } from './cookie.js';
 import { loadOpSelectButtons } from "./op_select.js"
 import { filterOperators } from "./data/operators.js"
+import { database, auth } from "./database/firebase.js"
+import { ref, push, set, get, query, remove, orderByChild, child } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js"
 
 // Constants
 const SOFT_PITY_BASE_RATE = 0.008;
@@ -139,13 +141,15 @@ function HHanimation() {
     newDiv.classList.add("pull-divs");
 
     newDiv.style.backgroundColor = colorMapping[item] || 'grey'; 
-    newDiv.textContent = operatorSelect(item);
+    const pulledOp = operatorSelect(item);
+    newDiv.textContent = pulledOp;
 
     if(item === 8) {
       newDiv.style.border = "5px var(--primary-accent) solid"
     }
 
     pullsContainer.appendChild(newDiv);
+    addHHHistory(pulledOp);
   });
 }
 
@@ -301,4 +305,54 @@ function simulatePulls(num = 1) {
 
   document.getElementById("1-pull-button").disabled = false;
   document.getElementById("10-pull-button").disabled = false;
+}
+
+async function addHHHistory(operatorName) {
+  const userId = auth.currentUser?.uid;
+  if(!userId) {
+    return;
+  }
+
+  try {
+    const date = new Date().toISOString();
+    const HHHistoryRef = ref(database, userId + "/hh-history/");
+    const newHHHistoryRef = push(HHHistoryRef)
+
+    await set(newHHHistoryRef, {
+      date, operatorName
+    });
+
+    await limitHistory(HHHistoryRef);
+  }
+  catch(err) {
+    console.error("Error adding history entry: ", err);
+  }
+}
+
+async function limitHistory(hhHistoryRef) {
+  try {
+    const historyQuery = query(hhHistoryRef, orderByChild("date"));
+    let snapshot = await get(historyQuery);
+
+    if (snapshot.exists()) {
+      let entries = snapshot.val();
+      let entriesCount = Object.keys(entries).length;
+
+      while (entriesCount > 80) {
+        console.log(entriesCount);
+        const oldestKey = Object.keys(entries)[0];
+        const oldestEntryRef = child(hhHistoryRef, oldestKey);
+
+        await remove(oldestEntryRef);
+
+        snapshot = await get(historyQuery); 
+        if (snapshot.exists()) {
+          entries = snapshot.val();
+          entriesCount = Object.keys(entries).length; 
+        }
+      }
+    }
+  } catch (error) {
+    console.error("Error checking and limiting history: ", error);
+  }
 }

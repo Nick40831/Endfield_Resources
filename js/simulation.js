@@ -279,7 +279,7 @@ function simulation() {
 		<ul>
 			<li><strong>Mean rate-up 6* pulls:</strong> ${meanRateUp6.toFixed(2)} rate-up operators</li>
 			<li><strong>Mean limited 6* pulls:</strong> ${meanLimit6.toFixed(2)} limited operators</li>
-			<li><strong>Mean number of 6* (Including rate-up 6*):</strong> ${mean6.toFixed(2)} operators</li>
+			<li><strong>Mean number of 6* (Including rate-up 6*):</strong> ${mean6.toFixed(2)} operators</li> 
 			<li><strong>Mean number of 5*:</strong> ${mean5.toFixed(2)} operators</li>
 			<li><strong>Mean number of 4*:</strong> ${mean4.toFixed(2)} operators</li>
 			<li><strong>Mean arsenal tokens:</strong> ${meanArsenal.toFixed(2)} tokens</li>

@@ -37,6 +37,6 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-export { app, database }
+export { app, database, auth}
 
 // https://firebase.google.com/docs/web/learn-more#available-libraries
