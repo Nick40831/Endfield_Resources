@@ -32,6 +32,6 @@
   color: var(--primary-accent);
 }
 
-#user-menu {
+#user-button {
   cursor: pointer;
 }
