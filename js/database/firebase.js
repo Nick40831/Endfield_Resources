@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
 import { getDatabase } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js"
 import { getAuth, setPersistence, browserLocalPersistence, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+import { loadUserButton } from "../title.js"
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -27,16 +28,17 @@ setPersistence(auth, browserLocalPersistence)
 onAuthStateChanged(auth, (user) => {
   try {
     if (user && user.displayName) {
-      document.getElementById("user-menu").textContent = user.displayName;
+      document.getElementById("user-button").textContent = user.displayName;
     } else {
-      document.getElementById("user-menu").textContent = "Guest";
+      document.getElementById("user-button").textContent = "Guest";
     }
+    loadUserButton();
   }
   catch {
     return;
   }
 });
 
-export { app, database }
+export { app, database, auth}
 
 // https://firebase.google.com/docs/web/learn-more#available-libraries

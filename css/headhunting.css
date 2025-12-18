@@ -120,3 +120,30 @@
 .op-buttons img {
   width: 100%;
 }
+
+#hh-history {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 25px 300px;
+}
+
+.hh-history-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: var(--base-color-2);
+}
+
+.hh-weapon {
+  font-weight: bold;
+  color: black;
+}
+
+.hh-date {
+  font-size: 0.85rem;
+  color: var(--secondary-accent);
+}

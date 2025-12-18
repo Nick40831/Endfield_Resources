@@ -1,6 +1,9 @@
 import { setCookie, getCookie } from './cookie.js';
 import { loadWeaponSelectButton } from "./weapon_select.js"
 import { filterWeapons } from "./data/weapons.js"
+import { database, auth } from "./database/firebase.js"
+import { ref, push, set, get, query, remove, orderByChild, child } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js"
+
 
 // Constants
 const HARD_PITY_INTERVAL = 40;
@@ -43,6 +46,7 @@ checkAECookies();
 updateAEStats();
 loadSelectedWeapon();
 loadWeaponSelectButton();
+displayAEHistory();
 
 document.getElementById("10-pull-button").onclick = function() { simulatePulls(10); };
 
@@ -110,14 +114,17 @@ function AEanimation() {
     newDiv.classList.add("pull-divs");
 
     newDiv.style.backgroundColor = colorMapping[item] || 'grey'; 
-    newDiv.textContent = weaponSelect(item);
+    const pulledWeapon = weaponSelect(item);
+    newDiv.textContent = pulledWeapon;
 
     if(item === 7) {
       newDiv.style.border = "5px var(--primary-accent) solid"
     }
 
     pullsContainer.appendChild(newDiv);
+    addAEHistory(pulledWeapon);
   });
+  displayAEHistory();
 }
 
 function weaponSelect(rarity) {
@@ -241,4 +248,106 @@ function simulatePulls(num = 1) {
   AEanimation();
 
   document.getElementById("10-pull-button").disabled = false;
+}
+
+async function addAEHistory(weaponName) {
+  const userId = auth.currentUser?.uid;
+  if(!userId) {
+    return;
+  }
+
+  try {
+    const date = new Date().toISOString();
+    const AEHistoryRef = ref(database, userId + "/ae-history/");
+    const newAEHistoryRef = push(AEHistoryRef)
+
+    await set(newAEHistoryRef, {
+      date, weaponName
+    });
+
+    await limitAEHistory(AEHistoryRef);
+  }
+  catch(err) {
+    console.error("Error adding history entry: ", err);
+  }
+}
+
+async function limitAEHistory(AEHistoryRef) {
+  try {
+    const historyQuery = query(AEHistoryRef, orderByChild("date"));
+    let snapshot = await get(historyQuery);
+
+    if (snapshot.exists()) {
+      let entries = snapshot.val();
+      let entriesCount = Object.keys(entries).length;
+
+      while (entriesCount > 80) {
+        console.log(entriesCount);
+        const oldestKey = Object.keys(entries)[0];
+        const oldestEntryRef = child(AEHistoryRef, oldestKey);
+
+        await remove(oldestEntryRef);
+
+        snapshot = await get(historyQuery); 
+        if (snapshot.exists()) {
+          entries = snapshot.val();
+          entriesCount = Object.keys(entries).length; 
+        }
+      }
+    }
+  } catch (error) {
+    console.error("Error checking and limiting history: ", error);
+  }
+}
+
+async function displayAEHistory() {
+  try {
+    auth.authStateReady().then(async () => {
+      const user = auth.currentUser;
+      if(!user) {
+        return;
+      }
+      const userId = user.uid;
+
+      const AEHistoryRef = ref(database, userId + "/ae-history/");
+
+      const historyContainer = document.getElementById("ae-history");
+      if (!historyContainer) return;
+
+      historyContainer.innerHTML = "";
+
+      const historyQuery = query(AEHistoryRef, orderByChild("date"));
+      const snapshot = await get(historyQuery);
+
+      if (!snapshot.exists()) {
+        historyContainer.innerHTML = "<p>No history yet.</p>";
+        return;
+      }
+
+      const entries = snapshot.val();
+
+      const sortedEntries = Object.values(entries).sort(
+        (a, b) => new Date(b.date) - new Date(a.date)
+      );
+
+      for (const entry of sortedEntries) {
+        const item = document.createElement("div");
+        item.className = "ae-history-item";
+
+        const weapon = document.createElement("div");
+        weapon.className = "ae-weapon";
+        weapon.textContent = entry.weaponName;
+
+        const date = document.createElement("div");
+        date.className = "ae-date";
+        date.textContent = new Date(entry.date).toLocaleString();
+
+        item.appendChild(weapon);
+        item.appendChild(date);
+        historyContainer.appendChild(item);
+      }
+    })
+  } catch (error) {
+    console.error("Error rendering AE history:", error);
+  }
 }

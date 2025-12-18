@@ -82,9 +82,10 @@ function simulation() {
 	// Constants
 	const SOFT_PITY_BASE_RATE = 0.008;
 	const SOFT_PITY_INCREMENT = 0.05;
+	const LIMIT_SIX_STAR_RATE = 0.1428;
 	const HARD_PITY_INTERVAL = 80;
-	const LIMITED_PITY_INTERVAL = 120;
-	const DUPLICATE_PITY_INTERVAL = 240;
+	const RATEUP_GUARANTEE = 120;
+	const RATE_UP_TOKEN_INTERVAL = 240;
 	const FIVE_STAR_RATE = 0.08;
 	const GUARANTEED_5_STAR_INTERVAL = 10;
 	const SIX_STAR_ARSENAL = 2000;
@@ -92,7 +93,8 @@ function simulation() {
 	const FOUR_STAR_ARSENAL = 20;
 	const ARSENAL_PULL_COST = 1980;
 
-	let limited6Totals = [];
+	let rateUp6Totals = [];
+	let limit6Totals = [];
 	let total6Totals = [];
 	let total5Totals = [];
 	let total4Totals = [];
@@ -133,8 +135,9 @@ function simulation() {
 
 	for (let i = 0; i < sampleSize; i++) {
 		let pulls = 0;
-		let gotLimited = false;
-		let limited6StarCount = 0;
+		let gotRateUp = false;
+		let rate6StarCount = 0;
+		let limit6StarCount = 0;
 		let total6StarCount = 0;
 		let guaranteed5StarCounter = 0;
 		let total5StarCount = 0;
@@ -148,7 +151,7 @@ function simulation() {
 		if (pullQuantity !== null) {
 			loopExitCondition = () => pulls >= pullQuantity;
 		} else if (potQuantity !== null) {
-			loopExitCondition = () => limited6StarCount >= potQuantity;
+			loopExitCondition = () => rate6StarCount >= potQuantity;
 		} else if (arsenalQuantity !== null) {
 			loopExitCondition = () => arsenalCounter >= arsenalQuantity;
 		} else {
@@ -159,17 +162,17 @@ function simulation() {
 			pulls++;
 			pityCounter++;
 
-			// Add limited 6* for every 240 pulls
-			if (pulls % DUPLICATE_PITY_INTERVAL === 0) {
-				limited6StarCount++;
+			// Add rate-up 6* for every 240 pulls
+			if (pulls % RATE_UP_TOKEN_INTERVAL === 0) {
+				rate6StarCount++;
 				total6StarCount++;
 				arsenalCounter += SIX_STAR_ARSENAL;
 				pityRate = SOFT_PITY_BASE_RATE;
 			}
 
-			// Add limited 6* on the 120th pull
-			if (!gotLimited && pulls === LIMITED_PITY_INTERVAL) {
-				limited6StarCount++;
+			// Add rate-up 6* on the 120th pull
+			if (!gotRateUp && pulls === RATEUP_GUARANTEE) {
+				rate6StarCount++;
 				total6StarCount++;
 				arsenalCounter += SIX_STAR_ARSENAL;
 				pityRate = SOFT_PITY_BASE_RATE;
@@ -177,12 +180,15 @@ function simulation() {
 				guaranteed5StarCounter = 0;
 			}
 
-			// If at hard pity, pull 6* operator, with 50% chance of being limited 6*
+			// If at hard pity, pull 6* operator, with 50% chance of being rate-up 6*
 			if (pityCounter === HARD_PITY_INTERVAL) {
 				pityCounter = 0;
 				if (Math.random() < 0.5) {
-						limited6StarCount++;
-						gotLimited = true;
+					rate6StarCount++;
+					gotRateUp = true;
+				}
+				else if (Math.random() < LIMIT_SIX_STAR_RATE) {
+					limit6StarCount++;
 				}
 				total6StarCount++;
 				arsenalCounter += SIX_STAR_ARSENAL;
@@ -192,12 +198,15 @@ function simulation() {
 
 			// Otherwise, check soft pity
 			else {
-				// If passed soft pity, pull 6* operator, with 50% chance of being limited 6*
+				// If passed soft pity, pull 6* operator, with 50% chance of being rate-up 6*
 				if (Math.random() < pityRate) {
 					pityCounter = 0;
 					if (Math.random() < 0.5) {
-						limited6StarCount++;
-						gotLimited = true;
+						rate6StarCount++;
+						gotRateUp = true;
+					}
+					else if (Math.random() < LIMIT_SIX_STAR_RATE) {
+						limit6StarCount++;
 					}
 					total6StarCount++;
 					arsenalCounter += SIX_STAR_ARSENAL;
@@ -233,7 +242,8 @@ function simulation() {
 		}
 
 		// Append totals to lists
-		limited6Totals.push(limited6StarCount);
+		rateUp6Totals.push(rate6StarCount);
+		limit6Totals.push(limit6StarCount);
 		total6Totals.push(total6StarCount);
 		total5Totals.push(total5StarCount);
 		total4Totals.push(total4StarCount);
@@ -242,7 +252,8 @@ function simulation() {
 	}
 
 	// Calculate averages
-	const meanLimited6 = average(limited6Totals);
+	const meanRateUp6 = average(rateUp6Totals);
+	const meanLimit6 = average(limit6Totals);
 	const mean6 = average(total6Totals);
 	const mean5 = average(total5Totals);
 	const mean4 = average(total4Totals);
@@ -266,8 +277,9 @@ function simulation() {
 		<p>---------------------------------------------</p>
 		${pullQuantity === null ? `<p><strong>Mean number of pulls performed:</strong> ${meanPulls.toFixed(2)}</p>` : ''}
 		<ul>
-			<li><strong>Mean rate-up 6* pulls:</strong> ${meanLimited6.toFixed(2)} rate-up operators</li>
-			<li><strong>Mean number of 6* (Including rate-up 6*):</strong> ${mean6.toFixed(2)} operators</li>
+			<li><strong>Mean rate-up 6* pulls:</strong> ${meanRateUp6.toFixed(2)} rate-up operators</li>
+			<li><strong>Mean limited 6* pulls:</strong> ${meanLimit6.toFixed(2)} limited operators</li>
+			<li><strong>Mean number of 6* (Including rate-up 6*):</strong> ${mean6.toFixed(2)} operators</li> 
 			<li><strong>Mean number of 5*:</strong> ${mean5.toFixed(2)} operators</li>
 			<li><strong>Mean number of 4*:</strong> ${mean4.toFixed(2)} operators</li>
 			<li><strong>Mean arsenal tokens:</strong> ${meanArsenal.toFixed(2)} tokens</li>

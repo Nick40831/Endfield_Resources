@@ -1,6 +1,8 @@
 import { setCookie, getCookie } from './cookie.js';
 import { loadOpSelectButtons } from "./op_select.js"
 import { filterOperators } from "./data/operators.js"
+import { database, auth } from "./database/firebase.js"
+import { ref, push, set, get, query, remove, orderByChild, child } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js"
 
 // Constants
 const SOFT_PITY_BASE_RATE = 0.008;
@@ -16,7 +18,7 @@ const FIVE_STAR_ARSENAL = 200;
 const FOUR_STAR_ARSENAL = 20;
 
 let pulls = 0;
-let gotLimited = false;
+let gotRateUp = false;
 let rate6StarCount = 0;
 let limit6StarCount = 0;
 let total6StarCount = 0;
@@ -52,13 +54,14 @@ checkHHCookies();
 updateHHStats();
 loadSelectedOps();
 loadOpSelectButtons();
+displayHHHistory();
 
 document.getElementById("1-pull-button").onclick = function() { simulatePulls(1); };
 document.getElementById("10-pull-button").onclick = function() { simulatePulls(10); };
 
 function checkHHCookies() {
   pulls = Number(getCookie("HH_pulls") || 0);
-  gotLimited = Boolean(getCookie("HH_gotLimited") || false)
+  gotRateUp = Boolean(getCookie("HH_gotRateUp") || false)
   rate6StarCount = Number(getCookie("HH_rate6StarCount") || 0);
   limit6StarCount = Number(getCookie("HH_limit6StarCount") || 0);
   total6StarCount = Number(getCookie("HH_total6StarCount") || 0);
@@ -74,7 +77,7 @@ function checkHHCookies() {
  
 function updateHHCookies() {
   setCookie("HH_pulls", pulls);
-  setCookie("HH_gotLimited", gotLimited);
+  setCookie("HH_gotRateUp", gotRateUp);
   setCookie("HH_rate6StarCount", rate6StarCount);
   setCookie("HH_limit6StarCount", limit6StarCount);
   setCookie("HH_total6StarCount", total6StarCount);
@@ -119,7 +122,7 @@ function updateHHStats() {
     <ul>
     	<li><strong>Pulls until guaranteed 6*:</strong> ${80 - pityCounter} pulls</li>
 			<li><strong>Pulls until guaranteed 5*:</strong> ${10 - guaranteed5StarCounter} pulls</li>
-      ${gotLimited ? '' : `<p><strong>Pulls untill guaranteed rate-up 6*:</strong> ${120 - pulls}</p>`}
+      ${gotRateUp ? '' : `<p><strong>Pulls untill guaranteed rate-up 6*:</strong> ${120 - pulls}</p>`}
       <br>
 			<li><strong>Pity rate:</strong> ${pityRate.toFixed(2)}</li>
 		</ul>
@@ -139,14 +142,17 @@ function HHanimation() {
     newDiv.classList.add("pull-divs");
 
     newDiv.style.backgroundColor = colorMapping[item] || 'grey'; 
-    newDiv.textContent = operatorSelect(item);
+    const pulledOp = operatorSelect(item);
+    newDiv.textContent = pulledOp;
 
     if(item === 8) {
       newDiv.style.border = "5px var(--primary-accent) solid"
     }
 
     pullsContainer.appendChild(newDiv);
+    addHHHistory(pulledOp);
   });
+  displayHHHistory();
 }
 
 function operatorSelect(rarity) {
@@ -209,7 +215,7 @@ function simulatePulls(num = 1) {
     }
 
     // Add limited 6* on the 120th pull
-    if (!gotLimited && pulls === RATEUP_GUARANTEE) {
+    if (!gotRateUp && pulls === RATEUP_GUARANTEE) {
       rate6StarCount++;
       simAddedLimited6Stars++;
       total6StarCount++;
@@ -226,7 +232,7 @@ function simulatePulls(num = 1) {
       if (Math.random() < 0.5) {
         rate6StarCount++;
         simAddedLimited6Stars++;
-        gotLimited = true;
+        gotRateUp = true;
         simPulledRarities.push(8)
       }
       else if (Math.random() < LIMIT_SIX_STAR_RATE) {
@@ -250,7 +256,7 @@ function simulatePulls(num = 1) {
         if (Math.random() < 0.5) {
           rate6StarCount++;
           simAddedLimited6Stars++;
-          gotLimited = true;
+          gotRateUp = true;
           simPulledRarities.push(8)
         }
         else if (Math.random() < LIMIT_SIX_STAR_RATE) {
@@ -301,4 +307,106 @@ function simulatePulls(num = 1) {
 
   document.getElementById("1-pull-button").disabled = false;
   document.getElementById("10-pull-button").disabled = false;
+}
+
+async function addHHHistory(operatorName) {
+  const userId = auth.currentUser?.uid;
+  if(!userId) {
+    return;
+  }
+
+  try {
+    const date = new Date().toISOString();
+    const HHHistoryRef = ref(database, userId + "/hh-history/");
+    const newHHHistoryRef = push(HHHistoryRef)
+
+    await set(newHHHistoryRef, {
+      date, operatorName
+    });
+
+    await limitHHHistory(HHHistoryRef);
+  }
+  catch(err) {
+    console.error("Error adding history entry: ", err);
+  }
+}
+
+async function limitHHHistory(hhHistoryRef) {
+  try {
+    const historyQuery = query(hhHistoryRef, orderByChild("date"));
+    let snapshot = await get(historyQuery);
+
+    if (snapshot.exists()) {
+      let entries = snapshot.val();
+      let entriesCount = Object.keys(entries).length;
+
+      while (entriesCount > 80) {
+        console.log(entriesCount);
+        const oldestKey = Object.keys(entries)[0];
+        const oldestEntryRef = child(hhHistoryRef, oldestKey);
+
+        await remove(oldestEntryRef);
+
+        snapshot = await get(historyQuery); 
+        if (snapshot.exists()) {
+          entries = snapshot.val();
+          entriesCount = Object.keys(entries).length; 
+        }
+      }
+    }
+  } catch (error) {
+    console.error("Error checking and limiting history: ", error);
+  }
+}
+
+async function displayHHHistory() {
+  try {
+    auth.authStateReady().then(async () => {
+      const user = auth.currentUser;
+      if(!user) {
+        return;
+      }
+      const userId = user.uid;
+
+      const HHHistoryRef = ref(database, userId + "/hh-history/");
+
+      const historyContainer = document.getElementById("hh-history");
+      if (!historyContainer) return;
+
+      historyContainer.innerHTML = "";
+
+      const historyQuery = query(HHHistoryRef, orderByChild("date"));
+      const snapshot = await get(historyQuery);
+
+      if (!snapshot.exists()) {
+        historyContainer.innerHTML = "<p>No history yet.</p>";
+        return;
+      }
+
+      const entries = snapshot.val();
+
+      const sortedEntries = Object.values(entries).sort(
+        (a, b) => new Date(b.date) - new Date(a.date)
+      );
+
+      for (const entry of sortedEntries) {
+        const item = document.createElement("div");
+        item.className = "hh-history-item";
+
+        const op = document.createElement("div");
+        op.className = "hh-weapon";
+        op.textContent = entry.operatorName;
+
+        const date = document.createElement("div");
+        date.className = "hh-date";
+        date.textContent = new Date(entry.date).toLocaleString();
+
+        item.appendChild(op);
+        item.appendChild(date);
+        historyContainer.appendChild(item);
+      }
+    })
+  } catch (error) {
+    console.error("Error rendering AE history:", error);
+  }
 }
