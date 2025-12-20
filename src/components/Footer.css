@@ -1,0 +1,35 @@
+#footer {
+  /* Positioning */
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 99;
+
+  /* Size */
+  width: 100%;
+  height: auto;
+
+  /* Layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  /* Box model */
+  padding: 0.5em 1em;
+  box-sizing: border-box;
+
+  /* Styling */
+  outline: 1px solid red;
+}
+
+#footer a {
+  /* Text */
+  text-decoration: none;
+  color: inherit;
+}
+
+#footer img {
+  /* Size */
+  height: 2rem;
+}

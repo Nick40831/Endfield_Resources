@@ -1,0 +1,43 @@
+#header {
+  /* Positioning */
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 99;
+
+  /* Size */
+  width: 100%;
+  height: auto;
+
+  /* Layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  /* Box model */
+  padding: 1em;
+  box-sizing: border-box;
+
+  outline: 1px solid red;
+}
+
+#header h1 {
+  /* Text */
+  font-size: 2em;
+  font-weight: bolder;
+}
+
+#user-button {
+  /* Size */
+  min-width: 7%;
+
+  /* Layout */
+  text-align: center;
+
+  /* Text */
+  font-size: 1em;
+
+  /* Box model */
+  padding: 0.25em 1em;
+}
