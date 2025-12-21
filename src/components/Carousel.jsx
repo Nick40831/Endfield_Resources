@@ -5,7 +5,7 @@ function Carousel({ children }) {
   const carouselRef = useRef(null);
 
   function handleScroll(direction) {
-    const scrollAmount = direction === 'left' ? -200 : 200;
+    const scrollAmount = direction === 'left' ? -100 : 100;
     if (carouselRef.current) {
       carouselRef.current.scrollBy({ left: scrollAmount });
     }
@@ -14,13 +14,13 @@ function Carousel({ children }) {
   return (
     <>
       <div className='carouselContainer'>
-        <button className='carouselLeftButton' onClick={() => handleScroll('left')}>
+        <button className='carouselArrow' id='carouselLeftArrow' onClick={() => handleScroll('left')}>
           &#8592;
         </button>
         <div className='carouselBody' ref={ carouselRef }>
           {children}
         </div>
-        <button className='carouselRightButton' onClick={() => handleScroll('right')}>
+        <button className='carouselArrow' id='carouselRightArrow' onClick={() => handleScroll('right')}>
           &#8594;
         </button>
       </div>

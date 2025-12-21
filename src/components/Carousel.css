@@ -10,11 +10,11 @@
   align-items: center;
 
   /* Box model */
-  padding: 0.5em 1em;
-  box-sizing: border-box;
+  padding: 0.5em 7.5%;
 
-  /* Styling */
-  outline: 1px solid red;
+  /* Positioning */
+  position: relative;
+  z-index: 1;
 }
 
 .carouselBody {
@@ -25,13 +25,53 @@
   /* Layout */
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: start;
+  gap: 3%;
+  overflow-x: hidden;
+  margin: 0 3%;
 
   /* Box model */
   padding: 0.5em 1em;
-  box-sizing: border-box;
 
-  /* Styling */
-  outline: 1px solid red;
+  /* Animation */
+  scroll-behavior: smooth;
+
+  /* Positioning */
+  position: relative;
+  z-index: 1;
+}
+
+.carouselArrow {
+  display: flex;
+
+  font-size: x-large;
+  border: none;
+  height: 100%;
+  width: 7em;
+  cursor: pointer;
+  z-index: 99;
+
+  /* Positioning */
+  position: absolute;  
+  z-index: 10;
+
+  align-items: center;
+  text-align: center;
+}
+
+.carouselArrow:hover {
+  background-color: var(--secondary-accent);
+  color: black;
+}
+
+#carouselLeftArrow {
+  justify-content: start;
+  background: linear-gradient(to left, #A0AAA900, var(--base-color-2));
+  left: 10%;
+}
+
+#carouselRightArrow {
+  justify-content: end;
+  background: linear-gradient(to right, #A0AAA900, var(--base-color-2));
+  right: 10%;
 }

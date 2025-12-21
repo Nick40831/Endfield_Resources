@@ -17,10 +17,7 @@
 
   /* Box model */
   padding: 0.5em 1em;
-  box-sizing: border-box;
-
-  /* Styling */
-  outline: 1px solid red;
+  
 }
 
 #footer a {
@@ -31,5 +28,5 @@
 
 #footer img {
   /* Size */
-  height: 2rem;
+  height: 2em;
 }

@@ -1,0 +1,29 @@
+.blogPost {
+  background-color: var(--base-color-2); 
+  border-radius: 8px;
+  margin-bottom: 2em;
+  padding: 1.5em;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid var(--primary-accent); 
+}
+
+.blogPost h3 {
+  font-size: 1.25em;
+  color: var(--primary-accent);
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.blogPost p em {
+  font-size: 0.75em;
+  color: var(--base-color-3);
+  margin-bottom: 1em;
+  display: block;
+}
+
+.blogPost p {
+  font-size: 1em;
+  color: var(--text-color-1);
+  line-height: 1.5;
+  word-wrap: break-word;
+}

@@ -5,8 +5,9 @@ function Header() {
     <>
       <div id='header'>
         <a><h1 id='title'>EF Resources</h1></a>
-        <button id='user-button'>Guest</button>
+        <button id='userButton'>Guest</button>
       </div>
+      <div id='headerBlend'/>
     </>
   )
 }
