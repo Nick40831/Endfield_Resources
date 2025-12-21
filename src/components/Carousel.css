@@ -1,0 +1,37 @@
+.carouselContainer {
+  /* Size */
+  width: 100%;
+  height: auto;
+
+  /* Layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  /* Box model */
+  padding: 0.5em 1em;
+  box-sizing: border-box;
+
+  /* Styling */
+  outline: 1px solid red;
+}
+
+.carouselBody {
+  /* Size */
+  width: 100%;
+  height: auto;
+
+  /* Layout */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
+
+  /* Box model */
+  padding: 0.5em 1em;
+  box-sizing: border-box;
+
+  /* Styling */
+  outline: 1px solid red;
+}

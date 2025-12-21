@@ -1,0 +1,98 @@
+.carouselButton {
+  /* Positioning */
+  position: relative;
+
+  /* Size */
+  width: 8rem;
+
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  scroll-snap-align: center;
+
+  /* Box model */
+  margin: 0 10px;
+  border: none;
+
+  /* Styling */
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.carouselButton img {
+  /* Size */
+  height: 5rem;
+  aspect-ratio: 1;
+
+  /* Box model */
+  border: 5px solid var(--primary-accent);
+  border-radius: 10px;
+
+  /* Styling */
+  background-color: var(--base-color-2);
+}
+
+.carouselButton p {
+  /* Size */
+  width: 100%;
+
+  /* Text */
+  font-size: 1.2rem;
+  white-space: normal;
+  word-wrap: break-word;
+
+  /* Layout */
+  align-content: center;
+  justify-content: center;
+}
+
+.carouselButton.outOfOrder::after,
+.carouselButton.planned::after,
+.carouselButton.soon::after {
+  /* Positioning */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-35deg);
+  z-index: 10;
+
+  /* Box model */
+  padding: 6px 20px;
+  border-radius: 5px;
+
+  /* Text */
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: white;
+
+  /* Styling */
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.carouselButton.outOfOrder::after {
+  /* Content */
+  content: "OUT OF ORDER";
+
+  /* Styling */
+  background: rgba(200, 0, 0, 0.8);
+}
+
+.carouselButton.planned::after {
+  /* Content */
+  content: "PLANNED";
+
+  /* Styling */
+  background: rgba(0, 94, 255, 0.8);
+}
+
+.carouselButton.soon::after {
+  /* Content */
+  content: "COMING SOON";
+
+  /* Styling */
+  background: rgba(37, 200, 0, 0.8);
+}

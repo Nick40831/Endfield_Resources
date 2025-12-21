@@ -1,58 +1,31 @@
-import React, { useState, useRef } from "react";
-import "./Carousel.css"; 
+import { useState, useRef } from 'react';
+import './Carousel.css'
 
-const Carousel = ({ children }) => {
-  const [isAtStart, setIsAtStart] = useState(true);
-  const [isAtEnd, setIsAtEnd] = useState(false);
+function Carousel({ children }) {
   const carouselRef = useRef(null);
 
-  const handleScroll = (direction) => {
-    const scrollAmount = direction === "left" ? -200 : 200;
+  function handleScroll(direction) {
+    const scrollAmount = direction === 'left' ? -200 : 200;
     if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+      carouselRef.current.scrollBy({ left: scrollAmount });
     }
-  };
-
-  const handleScrollUpdate = () => {
-    if (carouselRef.current) {
-      const scrollPosition = carouselRef.current.scrollLeft;
-      const maxScrollPosition = carouselRef.current.scrollWidth - carouselRef.current.clientWidth;
-
-      setIsAtStart(scrollPosition <= 0);
-      setIsAtEnd(scrollPosition >= maxScrollPosition);
-    }
-  };
-
-  React.useEffect(() => {
-    handleScrollUpdate();
-    const carouselElement = carouselRef.current;
-    if (carouselElement) {
-      carouselElement.addEventListener("scroll", handleScrollUpdate);
-    }
-    return () => {
-      if (carouselElement) {
-        carouselElement.removeEventListener("scroll", handleScrollUpdate);
-      }
-    };
-  }, []);
+  }
 
   return (
-    <div className="carousel-container">
-      {!isAtStart && (
-        <button className="carousel-arrow left" onClick={() => handleScroll("left")}>
+    <>
+      <div className='carouselContainer'>
+        <button className='carouselLeftButton' onClick={() => handleScroll('left')}>
           &#8592;
         </button>
-      )}
-      <div className="carousel" ref={carouselRef}>
-        {children}
-      </div>
-      {!isAtEnd && (
-        <button className="carousel-arrow right" onClick={() => handleScroll("right")}>
+        <div className='carouselBody' ref={ carouselRef }>
+          {children}
+        </div>
+        <button className='carouselRightButton' onClick={() => handleScroll('right')}>
           &#8594;
         </button>
-      )}
-    </div>
-  );
-};
+      </div>
+    </>
+  )
+}
 
-export default Carousel;
+export default Carousel

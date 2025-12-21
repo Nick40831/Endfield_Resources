@@ -1,6 +1,6 @@
 #header {
   /* Positioning */
-  position: fixed;
+  position: sticky;
   left: 0;
   top: 0;
   z-index: 99;
@@ -19,6 +19,7 @@
   padding: 1em;
   box-sizing: border-box;
 
+  /* Styling */
   outline: 1px solid red;
 }
 
